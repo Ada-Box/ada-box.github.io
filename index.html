@@ -16,6 +16,13 @@
       color: #0055aa;
       font-size: 32px;
     }
+    h2 {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #222;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 6px;
+    }
     input[type="text"] {
       width: 100%;
       max-width: 500px;
@@ -26,7 +33,7 @@
       border-radius: 6px;
     }
     ul {
-      margin-top: 20px;
+      margin-top: 10px;
       padding-left: 20px;
     }
     li {
@@ -49,36 +56,53 @@
 </head>
 <body>
   <h1>Ada 的法律资料主页</h1>
-  <p>以下资料均系为个人学习研究目的保存，点击链接可直接预览：</p>
+  <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
 
   <!-- 搜索框 -->
   <input type="text" id="searchInput" placeholder="🔍 输入关键词筛选文档..." onkeyup="filterList()" />
 
-  <!-- PDF 列表 -->
-  <ul id="pdfList">
+  <!-- Guide 类文档 -->
+  <h2>📁 操作指引类（Guide）</h2>
+  <ul class="pdf-section">
     <li>
-      📄 <a href="Guide/index.pdf" target="_blank">
-        微信、支付宝交易流水调取操作指引（律师版）
-      </a>
+      📄 <a href="Guide/index.pdf" target="_blank">微信、支付宝交易流水调取操作指引（律师版）</a>
       <div class="keywords">关键词：调查令 交易流水 实操指引</div>
     </li>
+  </ul>
+
+  <!-- Cases 类文档 -->
+  <h2>📁 判例类文档（Cases）</h2>
+  <ul class="pdf-section">
     <li>
-      📄 <a href="Cases/index.pdf" target="_blank">
-        （2021）最高法知民终2112号雄狮公司与新网公司计算机软件开发合同纠纷案
-      </a>
+      📄 <a href="Cases/index.pdf" target="_blank">（2021）最高法知民终2112号雄狮公司与新网公司计算机软件开发合同纠纷案</a>
       <div class="keywords">关键词：聊天记录 原始载体</div>
     </li>
-    <!-- 你可以继续添加更多 PDF 文件条目 -->
   </ul>
+
+  <!-- 更多分类可自行添加 -->
+  <!-- <h2>📁 其他分类（Other）</h2> -->
 
   <!-- JavaScript 搜索功能 -->
   <script>
     function filterList() {
       const input = document.getElementById("searchInput").value.toLowerCase();
-      const items = document.querySelectorAll("#pdfList li");
-      items.forEach(item => {
-        const text = item.innerText.toLowerCase();
-        item.style.display = text.includes(input) ? "" : "none";
+      const sections = document.querySelectorAll(".pdf-section");
+      sections.forEach(section => {
+        const items = section.querySelectorAll("li");
+        let hasVisible = false;
+        items.forEach(item => {
+          const text = item.innerText.toLowerCase();
+          const match = text.includes(input);
+          item.style.display = match ? "" : "none";
+          if (match) hasVisible = true;
+        });
+        // 隐藏整个 section if none matched
+        section.style.display = hasVisible ? "" : "none";
+        // 如果整个 section 隐藏，也隐藏它前面的 h2
+        const prevHeading = section.previousElementSibling;
+        if (prevHeading && prevHeading.tagName === "H2") {
+          prevHeading.style.display = hasVisible ? "" : "none";
+        }
       });
     }
   </script>
