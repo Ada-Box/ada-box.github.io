@@ -16,12 +16,21 @@
       color: #0055aa;
       font-size: 32px;
     }
+    input[type="text"] {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
     ul {
       margin-top: 20px;
       padding-left: 20px;
     }
     li {
-      margin: 12px 0;
+      margin: 18px 0;
       font-size: 18px;
     }
     a {
@@ -41,7 +50,12 @@
 <body>
   <h1>Ada 的法律资料主页</h1>
   <p>以下资料均为 PDF 文件，点击链接可直接预览：</p>
-  <ul>
+
+  <!-- 搜索框 -->
+  <input type="text" id="searchInput" placeholder="🔍 输入关键词筛选文档..." onkeyup="filterList()" />
+
+  <!-- PDF 列表 -->
+  <ul id="pdfList">
     <li>
       📄 <a href="Guide/index.pdf" target="_blank">
         微信、支付宝交易流水调取操作指引（律师版）
@@ -56,5 +70,17 @@
     </li>
     <!-- 可以在此继续添加更多 PDF -->
   </ul>
+
+  <!-- JavaScript 搜索功能 -->
+  <script>
+    function filterList() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const items = document.querySelectorAll("#pdfList li");
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(input) ? "" : "none";
+      });
+    }
+  </script>
 </body>
 </html>
