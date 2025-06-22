@@ -52,6 +52,11 @@
       color: #666;
       margin-left: 24px;
     }
+    #noResults {
+      display: none;
+      color: #888;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -59,10 +64,10 @@
   <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
 
   <!-- 搜索框 -->
-  <input type="text" id="searchInput" placeholder="🔍 输入关键词筛选文档..." onkeyup="filterList()" />
+  <input type="text" id="searchInput" placeholder="🔍 搜索标题或关键词..." onkeyup="filterList()" />
 
-  <!-- Guide 类文档 -->
-  <h2>📁 操作指引类（Guide）</h2>
+  <!-- 📁 实操指引 / 指南 -->
+  <h2>📁 实操指引 / 指南</h2>
   <ul class="pdf-section">
     <li>
       📄 <a href="Guide/index.pdf" target="_blank">微信、支付宝交易流水调取操作指引（律师版）</a>
@@ -70,8 +75,8 @@
     </li>
   </ul>
 
-  <!-- Cases 类文档 -->
-  <h2>📁 判例类文档（Cases）</h2>
+  <!-- 📁 案例精选 -->
+  <h2>📁 案例精选</h2>
   <ul class="pdf-section">
     <li>
       📄 <a href="Cases/index.pdf" target="_blank">（2021）最高法知民终2112号雄狮公司与新网公司计算机软件开发合同纠纷案</a>
@@ -79,31 +84,36 @@
     </li>
   </ul>
 
-  <!-- 更多分类可自行添加 -->
-  <!-- <h2>📁 其他分类（Other）</h2> -->
+  <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
 
   <!-- JavaScript 搜索功能 -->
   <script>
     function filterList() {
       const input = document.getElementById("searchInput").value.toLowerCase();
       const sections = document.querySelectorAll(".pdf-section");
+      let anyVisible = false;
+
       sections.forEach(section => {
         const items = section.querySelectorAll("li");
         let hasVisible = false;
+
         items.forEach(item => {
           const text = item.innerText.toLowerCase();
           const match = text.includes(input);
           item.style.display = match ? "" : "none";
           if (match) hasVisible = true;
         });
-        // 隐藏整个 section if none matched
+
         section.style.display = hasVisible ? "" : "none";
-        // 如果整个 section 隐藏，也隐藏它前面的 h2
         const prevHeading = section.previousElementSibling;
         if (prevHeading && prevHeading.tagName === "H2") {
           prevHeading.style.display = hasVisible ? "" : "none";
         }
+
+        if (hasVisible) anyVisible = true;
       });
+
+      document.getElementById("noResults").style.display = anyVisible ? "none" : "block";
     }
   </script>
 </body>
