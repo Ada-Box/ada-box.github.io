@@ -16,15 +16,8 @@
       color: #0055aa;
       font-size: 32px;
     }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin: 20px 0;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
     ul {
+      margin-top: 20px;
       padding-left: 20px;
     }
     li {
@@ -38,41 +31,30 @@
     a:hover {
       text-decoration: underline;
     }
+    .keywords {
+      font-size: 14px;
+      color: #666;
+      margin-left: 24px;
+    }
   </style>
 </head>
 <body>
   <h1>Ada 的法律资料主页</h1>
   <p>以下资料均为 PDF 文件，点击链接可直接预览：</p>
-
-  <input type="text" id="searchInput" placeholder="🔍 输入关键词搜索标题..." />
-
-  <ul id="pdfList">
+  <ul>
     <li>
       📄 <a href="Guide/index.pdf" target="_blank">
         微信、支付宝交易流水调取操作指引（律师版）
       </a>
+      <div class="keywords">关键词：调查令 交易流水 实操指引</div>
     </li>
     <li>
       📄 <a href="Cases/index.pdf" target="_blank">
         （2021）最高法知民终2112号雄狮公司与新网公司计算机软件开发合同纠纷案
       </a>
+      <div class="keywords">关键词：聊天记录 原始载体</div>
     </li>
-    <!-- 可继续添加其他 PDF 条目 -->
+    <!-- 可以在此继续添加更多 PDF -->
   </ul>
-
-  <script>
-    const input = document.getElementById("searchInput");
-    const list = document.getElementById("pdfList");
-
-    input.addEventListener("input", function () {
-      const filter = input.value.toLowerCase();
-      const items = list.getElementsByTagName("li");
-
-      for (let i = 0; i < items.length; i++) {
-        const text = items[i].textContent.toLowerCase();
-        items[i].style.display = text.includes(filter) ? "" : "none";
-      }
-    });
-  </script>
 </body>
 </html>
