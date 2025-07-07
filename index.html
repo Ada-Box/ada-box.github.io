@@ -246,7 +246,7 @@
         items.forEach(item => {
           const text = item.textContent.toLowerCase();
           const tagMatch = (currentTag === 'all') || section.previousElementSibling.textContent.includes(currentTag);
-          const keywordMatch = keywords.length === 0 || keywords.some(kw => text.includes(kw));
+          const keywordMatch = keywords.length === 0 || keywords.every(kw => text.includes(kw));
 
           if (tagMatch && keywordMatch) {
             item.style.display = "";
