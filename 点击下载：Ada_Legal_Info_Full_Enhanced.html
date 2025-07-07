@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ada 的法律资料主页</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    h1 {
+      color: #0055aa;
+      font-size: 32px;
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #222;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 6px;
+    }
+    input[type="text"] {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    li {
+      margin: 18px 0;
+      font-size: 18px;
+    }
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .keywords {
+      font-size: 14px;
+      color: #666;
+      margin-left: 24px;
+    }
+    #noResults {
+      display: none;
+      color: #888;
+      margin-top: 20px;
+    }
+    .filter-bar {
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 6px 12px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background-color: #007acc;
+      color: white;
+    }
+    mark {
+      background-color: yellow;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ada 的法律资料主页</h1>
+  <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
+
+  <input type="text" id="searchInput" placeholder="🔍 搜索标题或关键词..." onkeyup="filterList()" />
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterTag('all')">全部</button>
+    <button class="filter-btn" onclick="filterTag('实操指引')">实操指引</button>
+    <button class="filter-btn" onclick="filterTag('案例精选')">案例精选</button>
+    <button class="filter-btn" onclick="filterTag('法律研究')">法律研究</button>
+  </div>
+
+  <div id="listPlaceholder">
+    <!-- 请在此插入 <h2> 和 <ul class="pdf-section"> 等原始列表结构 -->
+    <!-- 📥 实操指引 / 指南 -->
+  <h2>📥 实操指引 / 指南</h2>
+  <ul class="pdf-section">
+    <li>
+      🔖 <a href="Guide/index000.html" target="_blank">微信、支付宝交易流水调取操作指引（律师版）</a>
+      <div class="keywords">关键词：调查令 交易流水 实操指引 微信 支付宝</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index001.html" target="_blank">办案小记 ｜ 如何持律师调查令前往腾讯调取微信流水（2025年5月版） </a>
+      <div class="keywords">关键词：调查令 交易流水 实操指引 微信</div>
+    </li>
+  </ul>
+
+  <!-- 📥 案例精选/官方问答 -->
+  <h2>📥 案例精选/官方问答</h2>
+  <ul class="pdf-section">
+    <li>
+      🔖 <a href="Cases/index000.html" target="_blank">【（2021）最高法知民终2112号】雄狮公司与新网公司计算机软件开发合同纠纷案</a>
+      <div class="keywords">关键词：聊天记录 原始载体</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index001.html" target="_blank">问题2：用人单位与劳动者连续两次订立固定期限劳动合同，期满后用人单位对续订无固定期限劳动合同是否享有选择权？</a>
+      <div class="keywords">关键词：无固定期限劳动合同 劳动合同 经济补偿金 违法解除</div>
+    </li>
+  </ul>
+
+  <!-- 📥 法律研究 -->
+  <h2>📥 法律研究</h2>
+  <ul class="pdf-section">
+    <li>
+      🔖 <a href="Legal Research/index000.html" target="_blank">关于股东知情权的实务分析</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例 前置程序</div>
+    </li>
+    <li>
+      🔖 <a href="Legal Research/index001.html" target="_blank">专业文章：有限公司股东知情权的行使与救济</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例 前置程序 知情权行使范围 申请执行</div>
+    </li>
+    <!-- 其余 Legal Research 条目省略（为了简洁展示） -->
+  </ul>
+  </div>
+
+  <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
+
+  <script>
+    let currentTag = 'all';
+
+    function highlightText(text, keywords) {
+      let result = text;
+      keywords.forEach(kw => {
+        if (kw) {
+          const regex = new RegExp(`(${kw})`, 'gi');
+          result = result.replace(regex, '<mark>$1</mark>');
+        }
+      });
+      return result;
+    }
+
+    function filterList() {
+      const input = document.getElementById("searchInput").value.toLowerCase().trim();
+      const keywords = input.split(/\s+/).filter(kw => kw);
+      const sections = document.querySelectorAll(".pdf-section");
+      let anyVisible = false;
+
+      sections.forEach(section => {
+        const items = section.querySelectorAll("li");
+        let hasVisible = false;
+
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const tagMatch = (currentTag === 'all') || section.previousElementSibling.textContent.includes(currentTag);
+          const keywordMatch = keywords.length === 0 || keywords.some(kw => text.includes(kw));
+
+          if (tagMatch && keywordMatch) {
+            item.style.display = "";
+            const originalHTML = item.innerHTML;
+            item.innerHTML = highlightText(originalHTML.replace(/<mark>|<\/mark>/g, ''), keywords);
+            hasVisible = true;
+          } else {
+            item.style.display = "none";
+          }
+        });
+
+        section.style.display = hasVisible ? "" : "none";
+        const heading = section.previousElementSibling;
+        if (heading && heading.tagName === "H2") {
+          heading.style.display = hasVisible ? "" : "none";
+        }
+
+        if (hasVisible) anyVisible = true;
+      });
+
+      document.getElementById("noResults").style.display = anyVisible ? "none" : "block";
+    }
+
+    function filterTag(tag) {
+      currentTag = tag;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      filterList();
+    }
+  </script>
+</body>
+</html>
