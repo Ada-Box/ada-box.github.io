@@ -57,16 +57,43 @@
       color: #888;
       margin-top: 20px;
     }
+    .filter-bar {
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 6px 12px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background-color: #007acc;
+      color: white;
+    }
+    mark {
+      background-color: yellow;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h1>Ada 的法律资料主页</h1>
   <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
 
-  <!-- 搜索框 -->
   <input type="text" id="searchInput" placeholder="🔍 搜索标题或关键词..." onkeyup="filterList()" />
 
-  <!-- 📥 实操指引 / 指南 -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterTag('all')">全部</button>
+    <button class="filter-btn" onclick="filterTag('实操指引')">实操指引</button>
+    <button class="filter-btn" onclick="filterTag('案例精选')">案例精选</button>
+    <button class="filter-btn" onclick="filterTag('法律研究')">法律研究</button>
+  </div>
+
+  <div id="listPlaceholder">
+    <!-- 请在此插入 <h2> 和 <ul class="pdf-section"> 等原始列表结构 -->
+    <!-- 📥 实操指引 / 指南 -->
   <h2>📥 实操指引 / 指南</h2>
   <ul class="pdf-section">
     <li>
@@ -92,7 +119,7 @@
     </li>
   </ul>
 
-   <!-- 📥 法律研究 -->
+  <!-- 📥 法律研究 -->
   <h2>📥 法律研究</h2>
   <ul class="pdf-section">
     <li>
@@ -186,15 +213,29 @@
     <li>
       🔖 <a href="Legal Research/index022.html" target="_blank">【投资纠纷审计工作笔记】从法律条文分析：投资人与实际控制人对股东查阅范围博弈的关键点</a>
       <div class="keywords">关键词：股东知情权纠纷 知情权行使范围</div>
-    </li>  
+    </li> 
   </ul>
-  
+  </div>
+
   <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
 
-  <!-- JavaScript 搜索功能 -->
   <script>
+    let currentTag = 'all';
+
+    function highlightText(text, keywords) {
+      let result = text;
+      keywords.forEach(kw => {
+        if (kw) {
+          const regex = new RegExp(`(${kw})`, 'gi');
+          result = result.replace(regex, '<mark>$1</mark>');
+        }
+      });
+      return result;
+    }
+
     function filterList() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
+      const input = document.getElementById("searchInput").value.toLowerCase().trim();
+      const keywords = input.split(/\s+/).filter(kw => kw);
       const sections = document.querySelectorAll(".pdf-section");
       let anyVisible = false;
 
@@ -203,22 +244,37 @@
         let hasVisible = false;
 
         items.forEach(item => {
-          const text = item.innerText.toLowerCase();
-          const match = text.includes(input);
-          item.style.display = match ? "" : "none";
-          if (match) hasVisible = true;
+          const text = item.textContent.toLowerCase();
+          const tagMatch = (currentTag === 'all') || section.previousElementSibling.textContent.includes(currentTag);
+          const keywordMatch = keywords.length === 0 || keywords.some(kw => text.includes(kw));
+
+          if (tagMatch && keywordMatch) {
+            item.style.display = "";
+            const originalHTML = item.innerHTML;
+            item.innerHTML = highlightText(originalHTML.replace(/<mark>|<\/mark>/g, ''), keywords);
+            hasVisible = true;
+          } else {
+            item.style.display = "none";
+          }
         });
 
         section.style.display = hasVisible ? "" : "none";
-        const prevHeading = section.previousElementSibling;
-        if (prevHeading && prevHeading.tagName === "H2") {
-          prevHeading.style.display = hasVisible ? "" : "none";
+        const heading = section.previousElementSibling;
+        if (heading && heading.tagName === "H2") {
+          heading.style.display = hasVisible ? "" : "none";
         }
 
         if (hasVisible) anyVisible = true;
       });
 
       document.getElementById("noResults").style.display = anyVisible ? "none" : "block";
+    }
+
+    function filterTag(tag) {
+      currentTag = tag;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      filterList();
     }
   </script>
 </body>
