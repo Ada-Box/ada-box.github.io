@@ -60,7 +60,12 @@
       max-width: 45%;
       box-sizing: border-box;
       margin: 10px 10px;
-      font-size: 18px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     a {
@@ -74,7 +79,9 @@
     .keywords {
       font-size: 13px;
       color: #666;
-      margin-top: 4px;
+      margin-top: 6px;
+      border-top: 1px dashed #ccc;
+      padding-top: 4px;
     }
 
     mark {
@@ -326,7 +333,7 @@
   </ul>
   </div>
 
-  <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
+   <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
 
   <script>
     let currentTag = 'all';
