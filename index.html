@@ -32,31 +32,7 @@
       border: 1px solid #ccc;
       border-radius: 6px;
     }
-    ul {
-      margin-top: 10px;
-      padding-left: 20px;
-    }
-    li {
-      margin: 18px 0;
-      font-size: 18px;
-    }
-    a {
-      color: #007acc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .keywords {
-      font-size: 14px;
-      color: #666;
-      margin-left: 24px;
-    }
-    #noResults {
-      display: none;
-      color: #888;
-      margin-top: 20px;
-    }
+
     .filter-bar {
       margin-bottom: 20px;
     }
@@ -72,9 +48,51 @@
       background-color: #007acc;
       color: white;
     }
+
+    .pdf-section {
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 0;
+      list-style: none;
+    }
+    .pdf-section li {
+      flex: 1 1 45%;
+      max-width: 45%;
+      box-sizing: border-box;
+      margin: 10px 10px;
+      font-size: 18px;
+    }
+
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .keywords {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
     mark {
       background-color: yellow;
       font-weight: bold;
+    }
+
+    #noResults {
+      display: none;
+      color: #888;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .pdf-section li {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -92,7 +110,6 @@
   </div>
 
   <div id="listPlaceholder">
-    <!-- 请在此插入 <h2> 和 <ul class="pdf-section"> 等原始列表结构 -->
     <!-- 📥 实操指引 / 指南 -->
   <h2>📥 实操指引 / 指南</h2>
   <ul class="pdf-section">
