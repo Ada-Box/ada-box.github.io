@@ -458,36 +458,34 @@
   function filterList() {
     const input = document.getElementById("searchInput").value.toLowerCase().trim();
     const keywords = input.split(/\s+/).filter(kw => kw);
-    const sections = document.querySelectorAll(".pdf-section");
+    const items = document.querySelectorAll("li[data-tag]"); // only li with data-tag
     let anyVisible = false;
 
-    sections.forEach(section => {
-      const items = section.querySelectorAll("li");
-      let hasVisible = false;
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const tagMatch = (currentTag === 'all') || (item.getAttribute("data-tag") === currentTag);
+      const subtagMatch = (currentSubtag === 'all') || (item.getAttribute("data-subtag") === currentSubtag);
+      const keywordMatch = keywords.length === 0 || keywords.every(kw => text.includes(kw));
 
-      items.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        const tagMatch = (currentTag === 'all') || section.previousElementSibling.textContent.includes(currentTag);
-        const subtagMatch = (currentSubtag === 'all') || (item.getAttribute("data-subtag") === currentSubtag);
-        const keywordMatch = keywords.length === 0 || keywords.every(kw => text.includes(kw));
-
-        if (tagMatch && subtagMatch && keywordMatch) {
-          item.style.display = "";
-          const originalHTML = item.innerHTML;
-          item.innerHTML = highlightText(originalHTML.replace(/<mark>|<\/mark>/g, ''), keywords);
-          hasVisible = true;
-        } else {
-          item.style.display = "none";
-        }
-      });
-
-      section.style.display = hasVisible ? "" : "none";
-      const heading = section.previousElementSibling;
-      if (heading && (heading.tagName === "H2" || heading.tagName === "H3")) {
-        heading.style.display = hasVisible ? "" : "none";
+      if (tagMatch && subtagMatch && keywordMatch) {
+        item.style.display = "";
+        const originalHTML = item.innerHTML;
+        item.innerHTML = highlightText(originalHTML.replace(/<mark>|<\/mark>/g, ''), keywords);
+        anyVisible = true;
+      } else {
+        item.style.display = "none";
       }
+    });
 
-      if (hasVisible) anyVisible = true;
+    // 显示/隐藏其父 ul
+    document.querySelectorAll(".pdf-section").forEach(ul => {
+      const visibleCount = ul.querySelectorAll("li:not([style*='display: none'])").length;
+      ul.style.display = visibleCount > 0 ? "" : "none";
+
+      const prev = ul.previousElementSibling;
+      if (prev && (prev.tagName === "H2" || prev.tagName === "H3")) {
+        prev.style.display = visibleCount > 0 ? "" : "none";
+      }
     });
 
     document.getElementById("noResults").style.display = anyVisible ? "none" : "block";
@@ -508,17 +506,28 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    // 自动为 <li> 添加 data-subtag 属性
-    const allH3s = document.querySelectorAll("h3");
-    allH3s.forEach(h3 => {
-      const subtag = h3.textContent.trim().replace(/^[📥\s]*/, '');
-      let sibling = h3.nextElementSibling;
-      while (sibling && sibling.tagName === 'UL') {
-        sibling.querySelectorAll("li").forEach(li => {
-          li.setAttribute("data-subtag", subtag);
-        });
+    // 自动为 <li> 添加 data-tag 和 data-subtag
+    const allSections = document.querySelectorAll("#listPlaceholder > h2");
+    allSections.forEach(h2 => {
+      const tag = h2.textContent.trim().replace(/^[📥\s]*/, '');
+      let sibling = h2.nextElementSibling;
+
+      while (sibling && sibling.tagName !== 'H2') {
+        if (sibling.tagName === 'UL') {
+          sibling.querySelectorAll("li").forEach(li => {
+            li.setAttribute("data-tag", tag);
+          });
+        } else if (sibling.tagName === 'H3') {
+          const subtag = sibling.textContent.trim().replace(/^[📥\s]*/, '');
+          const subList = sibling.nextElementSibling;
+          if (subList && subList.tagName === 'UL') {
+            subList.querySelectorAll("li").forEach(li => {
+              li.setAttribute("data-tag", tag);
+              li.setAttribute("data-subtag", subtag);
+            });
+          }
+        }
         sibling = sibling.nextElementSibling;
-        if (sibling && (sibling.tagName === 'H3' || sibling.tagName === 'H2')) break;
       }
     });
 
