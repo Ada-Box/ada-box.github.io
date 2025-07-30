@@ -5,152 +5,129 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ada 的法律资料主页</title>
   <style>
-body {
-  font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: 40px;
-  color: #333;
-}
-
-h1 {
-  color: #0055aa;
-  font-size: 32px;
-}
-
-h2 {
-  margin-top: 40px;
-  font-size: 24px;
-  color: #222;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 6px;
-}
-
-h3 {
-  margin-top: 30px;
-  font-size: 20px;
-  color: #cc6600;
-  border-left: 4px solid #ffa500;
-  padding-left: 10px;
-  background-color: #fff6e5;
-}
-
-input[type="text"] {
-  width: 100%;
-  max-width: 500px;
-  padding: 10px;
-  font-size: 16px;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.filter-bar {
-  margin-bottom: 20px;
-}
-.filter-btn {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px 12px;
-  margin-right: 8px;
-  cursor: pointer;
-}
-.filter-btn.active {
-  background-color: #007acc;
-  color: white;
-}
-
-.subfilter-bar {
-  margin-bottom: 30px;
-}
-.subfilter-btn {
-  background: #f9f9f9;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  padding: 4px 10px;
-  margin: 4px 6px 4px 0;
-  cursor: pointer;
-  font-size: 13px;
-}
-.subfilter-btn.active {
-  background-color: #ffa500;
-  color: white;
-  border-color: #ffa500;
-}
-
-.pdf-section {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 0;
-  list-style: none;
-}
-.pdf-section li {
-  flex: 1 1 30%;
-  max-width: 30%;
-  box-sizing: border-box;
-  margin: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 10px;
-  background-color: #fff;
-}
-
-a {
-  color: #007acc;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-.keywords {
-  font-size: 12px;
-  color: #666;
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px dashed #aaa;
-}
-
-mark {
-  background-color: yellow;
-  font-weight: bold;
-}
-
-#noResults {
-  display: none;
-  color: #888;
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.load-more {
-  margin-top: 20px;
-  display: inline-block;
-  background: #eee;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 6px;
-}
-.load-more:hover {
-  background: #ddd;
-}
-
-@media (max-width: 992px) {
-  .pdf-section li {
-    flex: 1 1 45%;
-    max-width: 45%;
-  }
-}
-
-@media (max-width: 768px) {
-  .pdf-section li {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-}
-</style>
+    body {
+      font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    h1 {
+      color: #0055aa;
+      font-size: 32px;
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #222;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 6px;
+    }
+    h3 {
+      margin-top: 30px;
+      font-size: 20px;
+      color: #cc6600;
+      border-left: 4px solid #ffa500;
+      padding-left: 10px;
+      background-color: #fff6e5;
+    }
+    input[type="text"] {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .filter-bar {
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 6px 12px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background-color: #007acc;
+      color: white;
+    }
+    .subfilter-bar {
+      margin-bottom: 30px;
+    }
+    .subfilter-btn {
+      background: #f9f9f9;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      padding: 4px 10px;
+      margin: 4px 6px 4px 0;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .subfilter-btn.active {
+      background-color: #ffa500;
+      color: white;
+      border-color: #ffa500;
+    }
+    .pdf-section {
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 0;
+      list-style: none;
+    }
+    .pdf-section li {
+      flex: 1 1 30%;
+      max-width: 30%;
+      box-sizing: border-box;
+      margin: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      background-color: #fff;
+    }
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .keywords {
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed #aaa;
+    }
+    mark {
+      background-color: yellow;
+      font-weight: bold;
+    }
+    #noResults {
+      display: none;
+      color: #888;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    @media (max-width: 992px) {
+      .pdf-section li {
+        flex: 1 1 45%;
+        max-width: 45%;
+      }
+    }
+    @media (max-width: 768px) {
+      .pdf-section li {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
   <h1>Ada 的法律资料主页</h1>
   <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
 
@@ -464,129 +441,129 @@ mark {
 
   <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
 
-<script>
-let currentTag = 'all';
-let currentSubtag = 'all';
+  <script>
+    let currentTag = 'all';
+    let currentSubtag = 'all';
 
-function highlightText(text, keywords) {
-  let result = text;
-  keywords.forEach(kw => {
-    if (kw) {
-      const regex = new RegExp(`(${kw})`, 'gi');
-      result = result.replace(regex, '<mark>$1</mark>');
-    }
-  });
-  return result;
-}
-
-function filterList() {
-  const input = document.getElementById("searchInput").value.toLowerCase().trim();
-  const keywords = input.split(/\s+/).filter(Boolean);
-  const allLis = document.querySelectorAll("li[data-tag]");
-  const subGroups = new Map();
-
-  allLis.forEach(li => {
-    const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
-    const subtagMatch = currentSubtag === 'all' || li.dataset.subtag === currentSubtag;
-    const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
-    const visible = tagMatch && subtagMatch && keywordMatch;
-
-    const ul = li.closest('ul');
-    if (!subGroups.has(ul)) subGroups.set(ul, []);
-    subGroups.get(ul).push({ li, visible });
-  });
-
-  subGroups.forEach((group, ul) => {
-    const h = ul.previousElementSibling;
-    group.forEach(item => {
-      item.li.style.display = item.visible ? '' : 'none';
-      if (keywords.length > 0 && item.visible) {
-        item.li.innerHTML = highlightText(item.li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
-      }
-    });
-
-    const hasVisible = group.some(item => item.visible);
-    ul.style.display = hasVisible ? '' : 'none';
-    if (h && (h.tagName === 'H2' || h.tagName === 'H3')) {
-      h.style.display = hasVisible ? '' : 'none';
-    }
-  });
-
-  document.getElementById("noResults").style.display =
-    [...subGroups.values()].every(arr => arr.every(item => !item.visible)) ? "block" : "none";
-}
-
-function filterTag(tag) {
-  currentTag = tag;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  filterList();
-}
-
-function filterSubtag(subtag, btn) {
-  currentSubtag = subtag;
-  document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filterList();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const allH2s = document.querySelectorAll("#listPlaceholder > h2");
-
-  allH2s.forEach(h2 => {
-    const tag = h2.textContent.trim().replace(/^[📥\s]*/, '');
-    let sibling = h2.nextElementSibling;
-
-    while (sibling && sibling.tagName !== 'H2') {
-      if (sibling.tagName === 'UL') {
-        sibling.querySelectorAll("li").forEach(li => {
-          li.dataset.tag = tag;
-        });
-      } else if (sibling.tagName === 'H3') {
-        const subtag = sibling.textContent.trim().replace(/^[📥\s]*/, '');
-        let sublist = sibling.nextElementSibling;
-        if (sublist && sublist.tagName === 'UL') {
-          sublist.querySelectorAll("li").forEach(li => {
-            li.dataset.tag = tag;        // 修复点：绑定到对应 h2 分类
-            li.dataset.subtag = subtag;  // 同时绑定子类
-          });
-
-          // 拼音排序
-          const items = Array.from(sublist.querySelectorAll("li"));
-          items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
-          sublist.innerHTML = '';
-          items.forEach(li => sublist.appendChild(li));
+    function highlightText(text, keywords) {
+      let result = text;
+      keywords.forEach(kw => {
+        if (kw) {
+          const regex = new RegExp(`(${kw})`, 'gi');
+          result = result.replace(regex, '<mark>$1</mark>');
         }
-      }
-      sibling = sibling.nextElementSibling;
+      });
+      return result;
     }
-  });
 
-  // 自动生成子类筛选按钮
-  const subfilterBar = document.getElementById("subfilterBar");
-  const subtagSet = new Set();
-  document.querySelectorAll("li[data-subtag]").forEach(li => {
-    if (li.dataset.subtag) subtagSet.add(li.dataset.subtag);
-  });
+    function filterList() {
+      const input = document.getElementById("searchInput").value.toLowerCase().trim();
+      const keywords = input.split(/\s+/).filter(Boolean);
+      const allLis = document.querySelectorAll("li[data-tag]");
+      const subGroups = new Map();
 
-  if (subtagSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "subfilter-btn active";
-    allBtn.textContent = "全部子类";
-    allBtn.onclick = () => filterSubtag("all", allBtn);
-    subfilterBar.appendChild(allBtn);
-  }
+      allLis.forEach(li => {
+        const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
+        const subtagMatch = currentSubtag === 'all' || li.dataset.subtag === currentSubtag;
+        const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+        const visible = tagMatch && subtagMatch && keywordMatch;
 
-  [...subtagSet].sort().forEach(subtag => {
-    const btn = document.createElement("button");
-    btn.className = "subfilter-btn";
-    btn.textContent = subtag;
-    btn.onclick = () => filterSubtag(subtag, btn);
-    subfilterBar.appendChild(btn);
-  });
+        const ul = li.closest('ul');
+        if (!subGroups.has(ul)) subGroups.set(ul, []);
+        subGroups.get(ul).push({ li, visible });
+      });
 
-  filterList();
-});
-</script>
+      subGroups.forEach((group, ul) => {
+        const h = ul.previousElementSibling;
+        group.forEach(item => {
+          item.li.style.display = item.visible ? '' : 'none';
+          if (keywords.length > 0 && item.visible) {
+            item.li.innerHTML = highlightText(item.li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
+          }
+        });
+
+        const hasVisible = group.some(item => item.visible);
+        ul.style.display = hasVisible ? '' : 'none';
+        if (h && (h.tagName === 'H2' || h.tagName === 'H3')) {
+          h.style.display = hasVisible ? '' : 'none';
+        }
+      });
+
+      document.getElementById("noResults").style.display =
+        [...subGroups.values()].every(arr => arr.every(item => !item.visible)) ? "block" : "none";
+    }
+
+    function filterTag(tag) {
+      currentTag = tag;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      filterList();
+    }
+
+    function filterSubtag(subtag, btn) {
+      currentSubtag = subtag;
+      document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterList();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const allH2s = document.querySelectorAll("#listPlaceholder > h2");
+
+      allH2s.forEach(h2 => {
+        const tag = h2.textContent.trim().replace(/^[📥\s]*/, '');
+        let sibling = h2.nextElementSibling;
+
+        while (sibling && sibling.tagName !== 'H2') {
+          if (sibling.tagName === 'UL') {
+            sibling.querySelectorAll("li").forEach(li => {
+              li.dataset.tag = tag;
+            });
+          } else if (sibling.tagName === 'H3') {
+            const subtag = sibling.textContent.trim().replace(/^[📥\s]*/, '');
+            let sublist = sibling.nextElementSibling;
+            if (sublist && sublist.tagName === 'UL') {
+              // 绑定 h2 tag 和 h3 subtag
+              const items = Array.from(sublist.querySelectorAll("li"));
+              items.forEach(li => {
+                li.dataset.tag = tag;
+                li.dataset.subtag = subtag;
+              });
+              // 拼音排序
+              items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
+              sublist.innerHTML = '';
+              items.forEach(li => sublist.appendChild(li));
+            }
+          }
+          sibling = sibling.nextElementSibling;
+        }
+      });
+
+      // 自动生成子类按钮
+      const subfilterBar = document.getElementById("subfilterBar");
+      const subtagSet = new Set();
+      document.querySelectorAll("li[data-subtag]").forEach(li => {
+        if (li.dataset.subtag) subtagSet.add(li.dataset.subtag);
+      });
+
+      if (subtagSet.size > 0) {
+        const allBtn = document.createElement("button");
+        allBtn.className = "subfilter-btn active";
+        allBtn.textContent = "全部子类";
+        allBtn.onclick = () => filterSubtag("all", allBtn);
+        subfilterBar.appendChild(allBtn);
+      }
+
+      [...subtagSet].sort().forEach(subtag => {
+        const btn = document.createElement("button");
+        btn.className = "subfilter-btn";
+        btn.textContent = subtag;
+        btn.onclick = () => filterSubtag(subtag, btn);
+        subfilterBar.appendChild(btn);
+      });
+
+      filterList();
+    });
+  </script>
 </body>
 </html>
