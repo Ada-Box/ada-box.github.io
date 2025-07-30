@@ -190,7 +190,7 @@ mark {
   </ul>
 
 <!-- 二级子类 h3 + 子类 ul -->
-    <h3>📥 劳动人事</h3>
+    <h3>劳动人事</h3>
       <ul class="pdf-section">
         <li>
           🔖 <a href="Cases/index001.html" target="_blank">问题2：用人单位与劳动者连续两次订立固定期限劳动合同，期满后用人单位对续订无固定期限劳动合同是否享有选择权？</a>
@@ -207,7 +207,7 @@ mark {
   <!-- 其他“劳动人事”子类内容继续放在这个 ul 里 -->
       </ul>
 
-    <h3>📥 公司治理</h3>
+    <h3>公司治理</h3>
       <ul class="pdf-section">
         <li>
           🔖 <a href="Cases/index002.html" target="_blank">【（2016）川01民终4662号】李辉与成都航天橡塑件制造有限公司股东知情权纠纷案</a>
@@ -248,7 +248,7 @@ mark {
   </ul>
 
 <!-- 二级子类 h3 + 子类 ul -->
-    <h3>📥 公司治理</h3>
+    <h3>公司治理</h3>
       <ul class="pdf-section">
         <li>
           🔖 <a href="Legal Research/index000.html" target="_blank">关于股东知情权的实务分析</a>
@@ -345,7 +345,7 @@ mark {
   <!-- 其他“劳动人事”子类内容继续放在这个 ul 里 -->
       </ul>
 
-    <h3>📥 企业出海</h3>
+    <h3>企业出海</h3>
       <ul class="pdf-section">
         <li>    
           🔖 <a href="Legal Research/index023.html" target="_blank">君合法评丨澳大利亚法律系列介绍（一）：澳大利亚外商投资委员会审批</a>
@@ -417,7 +417,7 @@ mark {
         </li> 
       </ul>
 
-    <h3>📥 劳动人事</h3>
+    <h3>劳动人事</h3>
       <ul class="pdf-section">        
         <li>
           🔖 <a href="Legal Research/index040.html" target="_blank">从IPO案例看高校人员在外兼职的审核关注要点</a>
@@ -453,7 +453,7 @@ mark {
         </li>  
       </ul>
 
-    <h3>📥 投资并购</h3>
+    <h3>投资并购</h3>
       <ul class="pdf-section">     
         <li>
           🔖 <a href="Legal Research/index048.html" target="_blank">增资协议解除后要求公司返还增资款构成抽逃出资?|公司法权威解读</a>
@@ -557,7 +557,6 @@ function filterSubtag(subtag, btn) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 自动添加 data-tag 和 data-subtag
   const allH2s = document.querySelectorAll("#listPlaceholder > h2");
   allH2s.forEach(h2 => {
     const tag = h2.textContent.trim().replace(/^[📥\s]*/, '');
@@ -575,6 +574,16 @@ document.addEventListener("DOMContentLoaded", () => {
             li.dataset.tag = tag;
             li.dataset.subtag = subtag;
           });
+
+          // ✅ 拼音排序：对子类 UL 的 li 排序
+          const items = Array.from(sublist.querySelectorAll("li"));
+          items.sort((a, b) => {
+            const textA = a.textContent.trim();
+            const textB = b.textContent.trim();
+            return textA.localeCompare(textB, 'zh-CN');
+          });
+          sublist.innerHTML = '';
+          items.forEach(li => sublist.appendChild(li));
         }
       }
       sibling = sibling.nextElementSibling;
