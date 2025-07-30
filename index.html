@@ -467,8 +467,6 @@ mark {
 <script>
 let currentTag = 'all';
 let currentSubtag = 'all';
-let itemsPerPage = 9;
-let itemStateMap = new Map();
 
 function highlightText(text, keywords) {
   let result = text;
@@ -481,7 +479,7 @@ function highlightText(text, keywords) {
   return result;
 }
 
-function filterList(reset = true) {
+function filterList() {
   const input = document.getElementById("searchInput").value.toLowerCase().trim();
   const keywords = input.split(/\s+/).filter(Boolean);
   const allLis = document.querySelectorAll("li[data-tag]");
@@ -493,48 +491,24 @@ function filterList(reset = true) {
     const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
     const visible = tagMatch && subtagMatch && keywordMatch;
 
-    const key = li.closest('ul');
-    if (!subGroups.has(key)) subGroups.set(key, []);
-    subGroups.get(key).push({ li, visible });
+    const ul = li.closest('ul');
+    if (!subGroups.has(ul)) subGroups.set(ul, []);
+    subGroups.get(ul).push({ li, visible });
   });
 
   subGroups.forEach((group, ul) => {
     const h = ul.previousElementSibling;
-    let state = itemStateMap.get(ul) || { index: 0 };
-
-    if (reset) {
-      group.forEach(item => item.li.style.display = 'none');
-      const visibleItems = group.filter(g => g.visible);
-      state.index = 0;
-      state.items = visibleItems;
-      itemStateMap.set(ul, state);
-    }
-
-    const toShow = state.items.slice(0, state.index + itemsPerPage);
-    toShow.forEach(item => {
-      item.li.style.display = '';
-      if (keywords.length > 0) {
+    group.forEach(item => {
+      item.li.style.display = item.visible ? '' : 'none';
+      if (keywords.length > 0 && item.visible) {
         item.li.innerHTML = highlightText(item.li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
       }
     });
 
-    const remaining = state.items.length - toShow.length;
-    state.index += itemsPerPage;
-
-    const loadBtn = ul.nextElementSibling?.classList?.contains('load-more') ? ul.nextElementSibling : null;
-    if (loadBtn) loadBtn.remove();
-
-    if (remaining > 0) {
-      const btn = document.createElement('div');
-      btn.textContent = `加载更多（剩余 ${remaining} 条）`;
-      btn.className = 'load-more';
-      btn.onclick = () => filterList(false);
-      ul.after(btn);
-    }
-
-    ul.style.display = state.items.length > 0 ? '' : 'none';
+    const hasVisible = group.some(item => item.visible);
+    ul.style.display = hasVisible ? '' : 'none';
     if (h && (h.tagName === 'H2' || h.tagName === 'H3')) {
-      h.style.display = state.items.length > 0 ? '' : 'none';
+      h.style.display = hasVisible ? '' : 'none';
     }
   });
 
@@ -546,14 +520,14 @@ function filterTag(tag) {
   currentTag = tag;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-  filterList(true);
+  filterList();
 }
 
 function filterSubtag(subtag, btn) {
   currentSubtag = subtag;
   document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  filterList(true);
+  filterList();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -570,12 +544,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const subtag = sibling.textContent.trim().replace(/^[📥\s]*/, '');
         const sublist = sibling.nextElementSibling;
         if (sublist && sublist.tagName === 'UL') {
+          // ✅ 绑定父类 h2 的 tag 和子类 h3 的 subtag
           sublist.querySelectorAll("li").forEach(li => {
             li.dataset.tag = tag;
             li.dataset.subtag = subtag;
           });
 
-          // ✅ 拼音排序：对子类 UL 的 li 排序
+          // ✅ 按拼音排序
           const items = Array.from(sublist.querySelectorAll("li"));
           items.sort((a, b) => {
             const textA = a.textContent.trim();
@@ -590,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 自动生成子类按钮
+  // 自动生成子类筛选按钮
   const subfilterBar = document.getElementById("subfilterBar");
   const subtagSet = new Set();
   document.querySelectorAll("li[data-subtag]").forEach(li => {
@@ -613,7 +588,7 @@ document.addEventListener("DOMContentLoaded", () => {
     subfilterBar.appendChild(btn);
   });
 
-  filterList(true);
+  filterList();
 });
 </script>
 </body>
