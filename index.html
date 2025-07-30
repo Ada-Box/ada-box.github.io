@@ -532,9 +532,11 @@ function filterSubtag(subtag, btn) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const allH2s = document.querySelectorAll("#listPlaceholder > h2");
+
   allH2s.forEach(h2 => {
     const tag = h2.textContent.trim().replace(/^[📥\s]*/, '');
     let sibling = h2.nextElementSibling;
+
     while (sibling && sibling.tagName !== 'H2') {
       if (sibling.tagName === 'UL') {
         sibling.querySelectorAll("li").forEach(li => {
@@ -542,21 +544,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       } else if (sibling.tagName === 'H3') {
         const subtag = sibling.textContent.trim().replace(/^[📥\s]*/, '');
-        const sublist = sibling.nextElementSibling;
+        let sublist = sibling.nextElementSibling;
         if (sublist && sublist.tagName === 'UL') {
-          // ✅ 绑定父类 h2 的 tag 和子类 h3 的 subtag
           sublist.querySelectorAll("li").forEach(li => {
-            li.dataset.tag = tag;
-            li.dataset.subtag = subtag;
+            li.dataset.tag = tag;        // 修复点：绑定到对应 h2 分类
+            li.dataset.subtag = subtag;  // 同时绑定子类
           });
 
-          // ✅ 按拼音排序
+          // 拼音排序
           const items = Array.from(sublist.querySelectorAll("li"));
-          items.sort((a, b) => {
-            const textA = a.textContent.trim();
-            const textB = b.textContent.trim();
-            return textA.localeCompare(textB, 'zh-CN');
-          });
+          items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
           sublist.innerHTML = '';
           items.forEach(li => sublist.appendChild(li));
         }
