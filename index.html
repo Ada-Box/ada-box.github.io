@@ -583,8 +583,8 @@ function filterList() {
       if (el.tagName === "UL") {
         const lis = el.querySelectorAll("li");
         lis.forEach(li => {
-          const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
-          const subtagMatch = currentSubtag === 'all' || !li.dataset.subtag || li.dataset.subtag === currentSubtag;
+          const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
+          const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
           const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
           const visible = tagMatch && subtagMatch && keywordMatch;
           li.style.display = visible ? '' : 'none';
@@ -599,8 +599,8 @@ function filterList() {
         const nextUl = el.nextElementSibling;
         const lis = nextUl ? nextUl.querySelectorAll("li") : [];
         lis.forEach(li => {
-          const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
-          const subtagMatch = currentSubtag === 'all' || li.dataset.subtag === currentSubtag;
+          const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
+          const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
           const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
           const visible = tagMatch && subtagMatch && keywordMatch;
           li.style.display = visible ? '' : 'none';
@@ -624,11 +624,11 @@ function filterList() {
 
 function filterTag(tag) {
   currentTag = tag;
-  currentSubtag = 'all'; // 切换一级分类时重置子类
+  currentSubtag = 'all';
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-  document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.subfilter-btn')[0]?.classList.add('active');
+
+  updateSubfilterBar();
   filterList();
 }
 
@@ -637,6 +637,35 @@ function filterSubtag(subtag, btn) {
   document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   filterList();
+}
+
+function updateSubfilterBar() {
+  const subfilterBar = document.getElementById("subfilterBar");
+  subfilterBar.innerHTML = '';
+
+  const subtagSet = new Set();
+  const visibleLis = document.querySelectorAll("li[data-subtag]");
+  visibleLis.forEach(li => {
+    if (currentTag === 'all' || li.dataset.tag === currentTag) {
+      subtagSet.add(li.dataset.subtag);
+    }
+  });
+
+  if (subtagSet.size > 0) {
+    const allBtn = document.createElement("button");
+    allBtn.className = "subfilter-btn active";
+    allBtn.textContent = "全部子类";
+    allBtn.onclick = () => filterSubtag("all", allBtn);
+    subfilterBar.appendChild(allBtn);
+
+    [...subtagSet].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(subtag => {
+      const btn = document.createElement("button");
+      btn.className = "subfilter-btn";
+      btn.textContent = subtag;
+      btn.onclick = () => filterSubtag(subtag, btn);
+      subfilterBar.appendChild(btn);
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -652,7 +681,7 @@ document.addEventListener("DOMContentLoaded", () => {
           li.dataset.tag = tag;
         });
       } else if (sibling.tagName === "H3") {
-        const subtag = sibling.textContent.trim().replace(/^[📥\s]*/, '');
+        const subtag = sibling.textContent.trim();
         let ul = sibling.nextElementSibling;
         if (ul && ul.tagName === "UL") {
           const items = Array.from(ul.querySelectorAll("li"));
@@ -669,28 +698,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const subfilterBar = document.getElementById("subfilterBar");
-  const subtagSet = new Set();
-  document.querySelectorAll("li[data-subtag]").forEach(li => {
-    if (li.dataset.subtag) subtagSet.add(li.dataset.subtag);
-  });
-
-  if (subtagSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "subfilter-btn active";
-    allBtn.textContent = "全部子类";
-    allBtn.onclick = () => filterSubtag("all", allBtn);
-    subfilterBar.appendChild(allBtn);
-  }
-
-  [...subtagSet].sort().forEach(subtag => {
-    const btn = document.createElement("button");
-    btn.className = "subfilter-btn";
-    btn.textContent = subtag;
-    btn.onclick = () => filterSubtag(subtag, btn);
-    subfilterBar.appendChild(btn);
-  });
-
+  updateSubfilterBar();
   filterList();
 });
 </script>
