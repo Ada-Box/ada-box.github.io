@@ -567,43 +567,68 @@ function filterList() {
   const input = document.getElementById("searchInput").value.toLowerCase().trim();
   const keywords = input.split(/\s+/).filter(Boolean);
   const allLis = document.querySelectorAll("li[data-tag]");
-  const subGroups = new Map();
+  const h2Blocks = document.querySelectorAll("#listPlaceholder > h2");
 
-  allLis.forEach(li => {
-    const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
-    const subtagMatch = currentSubtag === 'all' || li.dataset.subtag === currentSubtag;
-    const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
-    const visible = tagMatch && subtagMatch && keywordMatch;
+  h2Blocks.forEach(h2 => {
+    let showH2 = false;
+    let sibling = h2.nextElementSibling;
+    const groupElements = [];
 
-    const ul = li.closest('ul');
-    if (!subGroups.has(ul)) subGroups.set(ul, []);
-    subGroups.get(ul).push({ li, visible });
-  });
+    while (sibling && sibling.tagName !== "H2") {
+      groupElements.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
 
-  subGroups.forEach((group, ul) => {
-    const h = ul.previousElementSibling;
-    group.forEach(item => {
-      item.li.style.display = item.visible ? '' : 'none';
-      if (keywords.length > 0 && item.visible) {
-        item.li.innerHTML = highlightText(item.li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
+    groupElements.forEach(el => {
+      if (el.tagName === "UL") {
+        const lis = el.querySelectorAll("li");
+        lis.forEach(li => {
+          const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
+          const subtagMatch = currentSubtag === 'all' || !li.dataset.subtag || li.dataset.subtag === currentSubtag;
+          const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+          const visible = tagMatch && subtagMatch && keywordMatch;
+          li.style.display = visible ? '' : 'none';
+          if (visible && keywords.length > 0) {
+            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
+          }
+        });
+        const anyVisible = [...lis].some(li => li.style.display !== 'none');
+        el.style.display = anyVisible ? '' : 'none';
+        if (anyVisible) showH2 = true;
+      } else if (el.tagName === "H3") {
+        const nextUl = el.nextElementSibling;
+        const lis = nextUl ? nextUl.querySelectorAll("li") : [];
+        lis.forEach(li => {
+          const tagMatch = currentTag === 'all' || li.dataset.tag === currentTag;
+          const subtagMatch = currentSubtag === 'all' || li.dataset.subtag === currentSubtag;
+          const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+          const visible = tagMatch && subtagMatch && keywordMatch;
+          li.style.display = visible ? '' : 'none';
+          if (visible && keywords.length > 0) {
+            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
+          }
+        });
+        const anyVisible = [...lis].some(li => li.style.display !== 'none');
+        el.style.display = anyVisible ? '' : 'none';
+        if (nextUl) nextUl.style.display = anyVisible ? '' : 'none';
+        if (anyVisible) showH2 = true;
       }
     });
 
-    const hasVisible = group.some(item => item.visible);
-    ul.style.display = hasVisible ? '' : 'none';
-    if (h && (h.tagName === 'H2' || h.tagName === 'H3')) {
-      h.style.display = hasVisible ? '' : 'none';
-    }
+    h2.style.display = showH2 ? '' : 'none';
   });
 
   document.getElementById("noResults").style.display =
-    [...subGroups.values()].every(arr => arr.every(item => !item.visible)) ? "block" : "none";
+    [...document.querySelectorAll("li[data-tag]")].every(li => li.style.display === "none") ? "block" : "none";
 }
 
 function filterTag(tag) {
   currentTag = tag;
+  currentSubtag = 'all'; // 切换一级分类时重置子类
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
+  document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.subfilter-btn')[0]?.classList.add('active');
   filterList();
 }
 
