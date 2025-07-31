@@ -4,128 +4,145 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ada 的法律资料主页</title>
-  <style>
-    body {
-      font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background-color: #f7f7f7;
-      margin: 0;
-      padding: 40px;
-      color: #333;
-    }
-    h1 {
-      color: #0055aa;
-      font-size: 32px;
-    }
-    h2 {
-      margin-top: 40px;
-      font-size: 24px;
-      color: #222;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 6px;
-    }
-    h3 {
-      margin-top: 30px;
-      font-size: 20px;
-      color: #cc6600;
-      border-left: 4px solid #ffa500;
-      padding-left: 10px;
-      background-color: #fff6e5;
-    }
-    input[type="text"] {
-      width: 100%;
-      max-width: 500px;
-      padding: 10px;
-      font-size: 16px;
-      margin: 20px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .filter-bar {
-      margin-bottom: 20px;
-    }
-    .filter-btn {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 6px 12px;
-      margin-right: 8px;
-      cursor: pointer;
-    }
-    .filter-btn.active {
-      background-color: #007acc;
-      color: white;
-    }
-    .subfilter-bar {
-      margin-bottom: 30px;
-    }
-    .subfilter-btn {
-      background: #f9f9f9;
-      border: 1px solid #bbb;
-      border-radius: 4px;
-      padding: 4px 10px;
-      margin: 4px 6px 4px 0;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .subfilter-btn.active {
-      background-color: #ffa500;
-      color: white;
-      border-color: #ffa500;
-    }
-    .pdf-section {
-      display: flex;
-      flex-wrap: wrap;
-      padding-left: 0;
-      list-style: none;
-    }
-    .pdf-section li {
-      flex: 1 1 30%;
-      max-width: 30%;
-      box-sizing: border-box;
-      margin: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 10px;
-      background-color: #fff;
-    }
-    a {
-      color: #007acc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .keywords {
-      font-size: 12px;
-      color: #666;
-      margin-top: 8px;
-      padding-top: 6px;
-      border-top: 1px dashed #aaa;
-    }
-    mark {
-      background-color: yellow;
-      font-weight: bold;
-    }
-    #noResults {
-      display: none;
-      color: #888;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-    @media (max-width: 992px) {
-      .pdf-section li {
-        flex: 1 1 45%;
-        max-width: 45%;
-      }
-    }
-    @media (max-width: 768px) {
-      .pdf-section li {
-        flex: 1 1 100%;
-        max-width: 100%;
-      }
-    }
-  </style>
+<style>
+body {
+  font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 40px;
+  color: #333;
+}
+h1 {
+  color: #0055aa;
+  font-size: 32px;
+}
+h2 {
+  margin-top: 40px;
+  font-size: 24px;
+  color: #222;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+}
+h3 {
+  margin-top: 30px;
+  font-size: 20px;
+  color: #cc6600;
+  border-left: 4px solid #ffa500;
+  padding-left: 10px;
+  background-color: #fff6e5;
+}
+input[type="text"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.filter-bar {
+  margin-bottom: 20px;
+}
+.filter-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.filter-btn.active {
+  background-color: #007acc;
+  color: white;
+}
+.subfilter-bar {
+  margin-bottom: 12px;
+}
+.subfilter-btn {
+  background: #f9f9f9;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 4px 10px;
+  margin: 4px 6px 4px 0;
+  cursor: pointer;
+  font-size: 13px;
+}
+.subfilter-btn.active {
+  background-color: #ffa500;
+  color: white;
+  border-color: #ffa500;
+}
+.tagfilter-bar {
+  margin-bottom: 30px;
+}
+.tagfilter-btn {
+  background: #f0f0f0;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 4px 10px;
+  margin: 4px 6px 4px 0;
+  cursor: pointer;
+  font-size: 13px;
+}
+.tagfilter-btn.active {
+  background-color: #228b22;
+  color: white;
+  border-color: #228b22;
+}
+.pdf-section {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  list-style: none;
+}
+.pdf-section li {
+  flex: 1 1 30%;
+  max-width: 30%;
+  box-sizing: border-box;
+  margin: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fff;
+}
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.keywords {
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed #aaa;
+}
+mark {
+  background-color: yellow;
+  font-weight: bold;
+}
+#noResults {
+  display: none;
+  color: #888;
+  margin-top: 20px;
+  font-size: 14px;
+}
+@media (max-width: 992px) {
+  .pdf-section li {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+}
+@media (max-width: 768px) {
+  .pdf-section li {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+</style>
 </head>
 <body>
   <h1>Ada 的法律资料主页</h1>
@@ -551,6 +568,7 @@
 <script>
 let currentTag = 'all';
 let currentSubtag = 'all';
+let currentKeyword = 'all';
 
 function highlightText(text, keywords) {
   let result = text;
@@ -585,8 +603,9 @@ function filterList() {
         lis.forEach(li => {
           const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
           const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-          const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
-          const visible = tagMatch && subtagMatch && keywordMatch;
+          const keywordMatch = (currentKeyword === 'all' || (li.dataset.keywords && li.dataset.keywords.includes(currentKeyword)));
+          const inputMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+          const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
           li.style.display = visible ? '' : 'none';
           if (visible && keywords.length > 0) {
             li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
@@ -601,8 +620,9 @@ function filterList() {
         lis.forEach(li => {
           const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
           const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-          const keywordMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
-          const visible = tagMatch && subtagMatch && keywordMatch;
+          const keywordMatch = (currentKeyword === 'all' || (li.dataset.keywords && li.dataset.keywords.includes(currentKeyword)));
+          const inputMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+          const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
           li.style.display = visible ? '' : 'none';
           if (visible && keywords.length > 0) {
             li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
@@ -627,7 +647,6 @@ function filterTag(tag) {
   currentSubtag = 'all';
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-
   updateSubfilterBar();
   filterList();
 }
@@ -635,6 +654,13 @@ function filterTag(tag) {
 function filterSubtag(subtag, btn) {
   currentSubtag = subtag;
   document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterList();
+}
+
+function filterKeyword(kw, btn) {
+  currentKeyword = kw;
+  document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   filterList();
 }
@@ -668,6 +694,34 @@ function updateSubfilterBar() {
   }
 }
 
+function updateKeywordFilterBar() {
+  const keywordBar = document.createElement("div");
+  keywordBar.className = "tagfilter-bar";
+  document.querySelector(".subfilter-bar").after(keywordBar);
+
+  const keywordSet = new Set();
+  document.querySelectorAll("li .keywords").forEach(div => {
+    const text = div.textContent.replace(/关键词[:：]/, '').trim();
+    text.split(/\s+/).forEach(k => keywordSet.add(k));
+  });
+
+  if (keywordSet.size > 0) {
+    const allBtn = document.createElement("button");
+    allBtn.className = "tagfilter-btn active";
+    allBtn.textContent = "全部关键词";
+    allBtn.onclick = () => filterKeyword("all", allBtn);
+    keywordBar.appendChild(allBtn);
+
+    [...keywordSet].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
+      const btn = document.createElement("button");
+      btn.className = "tagfilter-btn";
+      btn.textContent = kw;
+      btn.onclick = () => filterKeyword(kw, btn);
+      keywordBar.appendChild(btn);
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const allH2s = document.querySelectorAll("#listPlaceholder > h2");
 
@@ -679,6 +733,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (sibling.tagName === "UL") {
         sibling.querySelectorAll("li").forEach(li => {
           li.dataset.tag = tag;
+          const keywordText = li.querySelector('.keywords')?.textContent.replace(/关键词[:：]/, '').trim() || '';
+          li.dataset.keywords = keywordText;
         });
       } else if (sibling.tagName === "H3") {
         const subtag = sibling.textContent.trim();
@@ -688,6 +744,8 @@ document.addEventListener("DOMContentLoaded", () => {
           items.forEach(li => {
             li.dataset.tag = tag;
             li.dataset.subtag = subtag;
+            const keywordText = li.querySelector('.keywords')?.textContent.replace(/关键词[:：]/, '').trim() || '';
+            li.dataset.keywords = keywordText;
           });
           items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
           ul.innerHTML = '';
@@ -699,6 +757,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   updateSubfilterBar();
+  updateKeywordFilterBar();
   filterList();
 });
 </script>
