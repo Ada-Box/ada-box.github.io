@@ -568,7 +568,7 @@ mark {
 <script>
 let currentTag = 'all';
 let currentSubtag = 'all';
-let currentKeyword = 'all';
+let currentKeywords = [];
 
 function highlightText(text, keywords) {
   let result = text;
@@ -583,7 +583,7 @@ function highlightText(text, keywords) {
 
 function filterList() {
   const input = document.getElementById("searchInput").value.toLowerCase().trim();
-  const keywords = input.split(/\s+/).filter(Boolean);
+  const inputKeywords = input.split(/\s+/).filter(Boolean);
   const allLis = document.querySelectorAll("li[data-tag]");
   const h2Blocks = document.querySelectorAll("#listPlaceholder > h2");
 
@@ -603,12 +603,12 @@ function filterList() {
         lis.forEach(li => {
           const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
           const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-          const keywordMatch = (currentKeyword === 'all' || (li.dataset.keywords && li.dataset.keywords.includes(currentKeyword)));
-          const inputMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+          const keywordMatch = (currentKeywords.length === 0 || currentKeywords.every(kw => li.dataset.keywords && li.dataset.keywords.includes(kw)));
+          const inputMatch = (inputKeywords.length === 0 || inputKeywords.every(k => li.textContent.toLowerCase().includes(k)));
           const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
           li.style.display = visible ? '' : 'none';
-          if (visible && keywords.length > 0) {
-            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
+          if (visible && inputKeywords.length > 0) {
+            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), inputKeywords);
           }
         });
         const anyVisible = [...lis].some(li => li.style.display !== 'none');
@@ -620,12 +620,12 @@ function filterList() {
         lis.forEach(li => {
           const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
           const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-          const keywordMatch = (currentKeyword === 'all' || (li.dataset.keywords && li.dataset.keywords.includes(currentKeyword)));
-          const inputMatch = keywords.length === 0 || keywords.every(k => li.textContent.toLowerCase().includes(k));
+          const keywordMatch = (currentKeywords.length === 0 || currentKeywords.every(kw => li.dataset.keywords && li.dataset.keywords.includes(kw)));
+          const inputMatch = (inputKeywords.length === 0 || inputKeywords.every(k => li.textContent.toLowerCase().includes(k)));
           const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
           li.style.display = visible ? '' : 'none';
-          if (visible && keywords.length > 0) {
-            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), keywords);
+          if (visible && inputKeywords.length > 0) {
+            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), inputKeywords);
           }
         });
         const anyVisible = [...lis].some(li => li.style.display !== 'none');
@@ -640,11 +640,14 @@ function filterList() {
 
   document.getElementById("noResults").style.display =
     [...document.querySelectorAll("li[data-tag]")].every(li => li.style.display === "none") ? "block" : "none";
+
+  updateKeywordFilterBar();
 }
 
 function filterTag(tag) {
   currentTag = tag;
   currentSubtag = 'all';
+  currentKeywords = [];
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
   updateSubfilterBar();
@@ -653,15 +656,27 @@ function filterTag(tag) {
 
 function filterSubtag(subtag, btn) {
   currentSubtag = subtag;
+  currentKeywords = [];
   document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   filterList();
 }
 
 function filterKeyword(kw, btn) {
-  currentKeyword = kw;
-  document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (kw === 'all') {
+    currentKeywords = [];
+    document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  } else {
+    if (currentKeywords.includes(kw)) {
+      currentKeywords = currentKeywords.filter(k => k !== kw);
+      btn.classList.remove('active');
+    } else {
+      currentKeywords.push(kw);
+      btn.classList.add('active');
+    }
+    document.querySelector('.tagfilter-btn[textContent="全部关键词"]')?.classList.remove('active');
+  }
   filterList();
 }
 
@@ -695,14 +710,20 @@ function updateSubfilterBar() {
 }
 
 function updateKeywordFilterBar() {
-  const keywordBar = document.createElement("div");
+  const keywordBar = document.querySelector(".tagfilter-bar") || document.createElement("div");
   keywordBar.className = "tagfilter-bar";
+  keywordBar.innerHTML = '';
   document.querySelector(".subfilter-bar").after(keywordBar);
 
   const keywordSet = new Set();
-  document.querySelectorAll("li .keywords").forEach(div => {
-    const text = div.textContent.replace(/关键词[:：]/, '').trim();
-    text.split(/\s+/).forEach(k => keywordSet.add(k));
+  const lis = [...document.querySelectorAll("li[data-tag]")].filter(li => {
+    return (currentTag === 'all' || li.dataset.tag === currentTag) &&
+           (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
+  });
+
+  lis.forEach(li => {
+    const keywords = li.dataset.keywords?.split(/\s+/) || [];
+    keywords.forEach(k => keywordSet.add(k));
   });
 
   if (keywordSet.size > 0) {
