@@ -75,6 +75,17 @@ input[type="text"] {
 .tagfilter-bar {
   margin-bottom: 30px;
 }
+.tagfilter-group {
+  border-top: 1px dashed #ccc;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+.tagfilter-title {
+  font-weight: bold;
+  margin: 8px 0 4px;
+  font-size: 14px;
+  color: #555;
+}
 .tagfilter-btn {
   background: #f0f0f0;
   border: 1px solid #bbb;
@@ -692,6 +703,17 @@ function highlightText(text, keywords) {
   return result;
 }
 
+function getInitialLetter(str) {
+  const ch = str.charAt(0);
+  const code = ch.charCodeAt(0);
+  if (/^[A-Za-z]$/.test(ch)) return ch.toUpperCase();
+  if (code >= 0x4e00 && code <= 0x9fff) {
+    const py = window.pinyin?.getFullChars?.(str)?.charAt(0) || '';
+    return py.toUpperCase();
+  }
+  return '#';
+}
+
 function filterList() {
   const input = document.getElementById("searchInput").value.toLowerCase().trim();
   const inputKeywords = input.split(/\s+/).filter(Boolean);
@@ -837,21 +859,37 @@ function updateKeywordFilterBar() {
     keywords.forEach(k => keywordSet.add(k));
   });
 
-  if (keywordSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "tagfilter-btn active";
-    allBtn.textContent = "全部关键词";
-    allBtn.onclick = () => filterKeyword("all", allBtn);
-    keywordBar.appendChild(allBtn);
+  const grouped = {};
+  [...keywordSet].forEach(kw => {
+    const letter = getInitialLetter(kw);
+    if (!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(kw);
+  });
 
-    [...keywordSet].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
+  const allBtn = document.createElement("button");
+  allBtn.className = "tagfilter-btn active";
+  allBtn.textContent = "全部关键词";
+  allBtn.onclick = () => filterKeyword("all", allBtn);
+  keywordBar.appendChild(allBtn);
+
+  Object.keys(grouped).sort().forEach(letter => {
+    const title = document.createElement("div");
+    title.className = "tagfilter-title";
+    title.textContent = letter;
+
+    const groupDiv = document.createElement("div");
+    groupDiv.className = "tagfilter-group";
+    groupDiv.appendChild(title);
+
+    grouped[letter].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
       const btn = document.createElement("button");
       btn.className = "tagfilter-btn";
       btn.textContent = kw;
       btn.onclick = () => filterKeyword(kw, btn);
-      keywordBar.appendChild(btn);
+      groupDiv.appendChild(btn);
     });
-  }
+    keywordBar.appendChild(groupDiv);
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
