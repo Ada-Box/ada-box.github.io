@@ -779,14 +779,19 @@ function filterKeyword(kw, btn) {
     document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   } else {
-    if (currentKeywords.includes(kw)) {
+    const isActive = currentKeywords.includes(kw);
+    if (isActive) {
       currentKeywords = currentKeywords.filter(k => k !== kw);
       btn.classList.remove('active');
     } else {
       currentKeywords.push(kw);
       btn.classList.add('active');
     }
-    document.querySelector('.tagfilter-btn[textContent="全部关键词"]')?.classList.remove('active');
+    document.querySelectorAll('.tagfilter-btn').forEach(b => {
+      if (b.textContent === '全部关键词') {
+        b.classList.remove('active');
+      }
+    });
   }
   filterList();
 }
