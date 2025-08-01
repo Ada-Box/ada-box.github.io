@@ -831,6 +831,15 @@ function updateSubfilterBar() {
   }
 }
 
+function getPinyinInitial(text) {
+  const code = text.charCodeAt(0);
+  if (/[a-zA-Z]/.test(text[0])) return text[0].toUpperCase();
+  if (code >= 19968 && code <= 40869) {
+    return pinyinFirstLetter(text[0])?.toUpperCase() || '#';
+  }
+  return '#';
+}
+
 function updateKeywordFilterBar() {
   const keywordBar = document.querySelector(".tagfilter-bar") || document.createElement("div");
   keywordBar.className = "tagfilter-bar";
@@ -848,34 +857,35 @@ function updateKeywordFilterBar() {
     keywords.forEach(k => keywordSet.add(k));
   });
 
-  const grouped = {};
-  for (const kw of keywordSet) {
-    const first = kw[0].toUpperCase();
-    const group = /[A-Z]/.test(first) ? first : '#';
-    grouped[group] = grouped[group] || [];
-    grouped[group].push(kw);
-  }
+  if (keywordSet.size > 0) {
+    const allBtn = document.createElement("button");
+    allBtn.className = "tagfilter-btn active";
+    allBtn.textContent = "全部关键词";
+    allBtn.onclick = () => filterKeyword("all", allBtn);
+    keywordBar.appendChild(allBtn);
 
-  const allBtn = document.createElement("button");
-  allBtn.className = "tagfilter-btn active";
-  allBtn.textContent = "全部关键词";
-  allBtn.onclick = () => filterKeyword("all", allBtn);
-  keywordBar.appendChild(allBtn);
-
-  Object.keys(grouped).sort().forEach(letter => {
-    const line = document.createElement("div");
-    line.style.borderTop = "1px dashed #ccc";
-    line.style.marginTop = "8px";
-    line.style.paddingTop = "4px";
-    grouped[letter].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
-      const btn = document.createElement("button");
-      btn.className = "tagfilter-btn";
-      btn.textContent = kw;
-      btn.onclick = () => filterKeyword(kw, btn);
-      line.appendChild(btn);
+    const grouped = {};
+    [...keywordSet].forEach(kw => {
+      const initial = getPinyinInitial(kw);
+      if (!grouped[initial]) grouped[initial] = [];
+      grouped[initial].push(kw);
     });
-    keywordBar.appendChild(line);
-  });
+
+    Object.keys(grouped).sort().forEach(initial => {
+      const divider = document.createElement("div");
+      divider.textContent = initial;
+      divider.className = "pinyin-divider";
+      keywordBar.appendChild(divider);
+
+      grouped[initial].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
+        const btn = document.createElement("button");
+        btn.className = "tagfilter-btn";
+        btn.textContent = kw;
+        btn.onclick = () => filterKeyword(kw, btn);
+        keywordBar.appendChild(btn);
+      });
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
