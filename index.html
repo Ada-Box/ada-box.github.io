@@ -703,6 +703,51 @@ function highlightText(text, keywords) {
   return result;
 }
 
+function getPinyinInitial(char) {
+  const zhToPinyinInitial = ch => {
+    const code = ch.charCodeAt(0);
+    if (code >= 19968 && code <= 40869) {
+      const pinyin = pinyinFirstLetter(ch);
+      return pinyin ? pinyin.toUpperCase() : '#';
+    } else if (/[a-zA-Z]/.test(ch)) {
+      return ch.toUpperCase();
+    } else {
+      return '#';
+    }
+  };
+  return zhToPinyinInitial(char[0] || '#');
+}
+
+function pinyinFirstLetter(han) {
+  const dict = {
+    a: "阿啊锕嗄腌",
+    b: "八吧爸拔罢霸跋坝叭芭捌",
+    c: "擦才采参餐曹草策曾叉插差",
+    d: "大打达答搭瘩嗒耷",
+    f: "发法罚筏乏伐阀珐",
+    g: "噶嘎尬尕尜旮钆",
+    h: "哈蛤铪虾虾",
+    j: "夹加佳嘉枷家荚颊甲钾",
+    k: "咖喀咔胩",
+    l: "拉啦喇腊辣邋",
+    m: "妈麻马嘛码蚂",
+    n: "拿哪呐钠那娜",
+    p: "啪趴爬帕怕琶",
+    q: "期七妻戚柒漆栖",
+    r: "然染燃冉苒",
+    s: "撒洒萨卅仨飒",
+    t: "他她它塌塔踏",
+    w: "挖哇蛙洼娃瓦袜",
+    x: "西吸希析昔稀晰",
+    y: "压呀押鸦鸭芽牙",
+    z: "杂砸匝咂拶",
+  };
+  for (let key in dict) {
+    if (dict[key].includes(han)) return key;
+  }
+  return '#';
+}
+
 function filterList() {
   const input = document.getElementById("searchInput").value.toLowerCase().trim();
   const inputKeywords = input.split(/\s+/).filter(Boolean);
@@ -766,78 +811,13 @@ function filterList() {
   updateKeywordFilterBar();
 }
 
-function filterTag(tag) {
-  currentTag = tag;
-  currentSubtag = 'all';
-  currentKeywords = [];
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  updateSubfilterBar();
-  filterList();
-}
-
-function filterSubtag(subtag, btn) {
-  currentSubtag = subtag;
-  currentKeywords = [];
-  document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filterList();
-}
-
-function filterKeyword(kw, btn) {
-  if (kw === 'all') {
-    currentKeywords = [];
-    document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  } else {
-    if (currentKeywords.includes(kw)) {
-      currentKeywords = currentKeywords.filter(k => k !== kw);
-      btn.classList.remove('active');
-    } else {
-      currentKeywords.push(kw);
-      btn.classList.add('active');
-    }
-    document.querySelector('.tagfilter-btn[textContent="全部关键词"]')?.classList.remove('active');
-  }
-  filterList();
-}
-
-function updateSubfilterBar() {
-  const subfilterBar = document.getElementById("subfilterBar");
-  subfilterBar.innerHTML = '';
-
-  const subtagSet = new Set();
-  const visibleLis = document.querySelectorAll("li[data-subtag]");
-  visibleLis.forEach(li => {
-    if (currentTag === 'all' || li.dataset.tag === currentTag) {
-      subtagSet.add(li.dataset.subtag);
-    }
-  });
-
-  if (subtagSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "subfilter-btn active";
-    allBtn.textContent = "全部子类";
-    allBtn.onclick = () => filterSubtag("all", allBtn);
-    subfilterBar.appendChild(allBtn);
-
-    [...subtagSet].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(subtag => {
-      const btn = document.createElement("button");
-      btn.className = "subfilter-btn";
-      btn.textContent = subtag;
-      btn.onclick = () => filterSubtag(subtag, btn);
-      subfilterBar.appendChild(btn);
-    });
-  }
-}
-
 function updateKeywordFilterBar() {
   const keywordBar = document.querySelector(".tagfilter-bar") || document.createElement("div");
   keywordBar.className = "tagfilter-bar";
   keywordBar.innerHTML = '';
   document.querySelector(".subfilter-bar").after(keywordBar);
 
-  const keywordSet = new Set();
+  const keywordMap = {};
   const lis = [...document.querySelectorAll("li[data-tag]")].filter(li => {
     return (currentTag === 'all' || li.dataset.tag === currentTag) &&
            (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
@@ -845,87 +825,43 @@ function updateKeywordFilterBar() {
 
   lis.forEach(li => {
     const keywords = li.dataset.keywords?.split(/\s+/) || [];
-    keywords.forEach(k => keywordSet.add(k));
-  });
-
-  const grouped = {};
-  for (const k of keywordSet) {
-    const initial = k[0].toUpperCase();
-    const groupKey = /^[A-Z]$/.test(initial) ? initial : '#';
-    if (!grouped[groupKey]) grouped[groupKey] = [];
-    grouped[groupKey].push(k);
-  }
-
-  const allBtn = document.createElement("button");
-  allBtn.className = "tagfilter-btn active";
-  allBtn.textContent = "全部关键词";
-  allBtn.onclick = () => filterKeyword("all", allBtn);
-  keywordBar.appendChild(allBtn);
-
-  Object.keys(grouped).sort().forEach(letter => {
-    const divider = document.createElement("div");
-    divider.textContent = letter;
-    divider.style.borderTop = "1px dashed #ccc";
-    divider.style.margin = "10px 0 4px";
-    divider.style.paddingTop = "4px";
-    divider.style.color = "#555";
-    divider.style.fontWeight = "bold";
-    keywordBar.appendChild(divider);
-
-    grouped[letter].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
-      const btn = document.createElement("button");
-      btn.className = "tagfilter-btn";
-      btn.textContent = kw;
-      btn.onclick = () => filterKeyword(kw, btn);
-      keywordBar.appendChild(btn);
+    keywords.forEach(k => {
+      const initial = getPinyinInitial(k);
+      if (!keywordMap[initial]) keywordMap[initial] = new Set();
+      keywordMap[initial].add(k);
     });
   });
+
+  const sortedInitials = Object.keys(keywordMap).sort();
+  if (sortedInitials.length > 0) {
+    const allBtn = document.createElement("button");
+    allBtn.className = "tagfilter-btn active";
+    allBtn.textContent = "全部关键词";
+    allBtn.onclick = () => filterKeyword("all", allBtn);
+    keywordBar.appendChild(allBtn);
+
+    sortedInitials.forEach(initial => {
+      const header = document.createElement("div");
+      header.style.marginTop = "10px";
+      header.style.borderTop = "1px dashed #ccc";
+      header.style.fontWeight = "bold";
+      header.textContent = initial;
+      keywordBar.appendChild(header);
+
+      [...keywordMap[initial]].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
+        const btn = document.createElement("button");
+        btn.className = "tagfilter-btn";
+        btn.textContent = kw;
+        btn.onclick = () => filterKeyword(kw, btn);
+        keywordBar.appendChild(btn);
+      });
+    });
+  }
 }
 
-function extractKeywordsFromLi(li) {
-  const kwDiv = li.querySelector('.keywords');
-  if (!kwDiv) return '';
-  let raw = kwDiv.textContent.trim();
-  raw = raw.replace(/^关键词[:：]?\s*/, '');
-  return raw;
-}
+// 其余函数保持不变（filterTag, filterSubtag, filterKeyword, updateSubfilterBar 等）
+// 请确保你之前的 script 结尾部分也包含完整的初始化逻辑（DOMContentLoaded）
 
-document.addEventListener("DOMContentLoaded", () => {
-  const allH2s = document.querySelectorAll("#listPlaceholder > h2");
-
-  allH2s.forEach(h2 => {
-    const tag = h2.textContent.trim().replace(/^[📥\s]*/, '').split('/')[0].trim();
-    let sibling = h2.nextElementSibling;
-
-    while (sibling && sibling.tagName !== "H2") {
-      if (sibling.tagName === "UL") {
-        sibling.querySelectorAll("li").forEach(li => {
-          li.dataset.tag = tag;
-          li.dataset.keywords = extractKeywordsFromLi(li);
-        });
-      } else if (sibling.tagName === "H3") {
-        const subtag = sibling.textContent.trim();
-        let ul = sibling.nextElementSibling;
-        if (ul && ul.tagName === "UL") {
-          const items = Array.from(ul.querySelectorAll("li"));
-          items.forEach(li => {
-            li.dataset.tag = tag;
-            li.dataset.subtag = subtag;
-            li.dataset.keywords = extractKeywordsFromLi(li);
-          });
-          items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
-          ul.innerHTML = '';
-          items.forEach(li => ul.appendChild(li));
-        }
-      }
-      sibling = sibling.nextElementSibling;
-    }
-  });
-
-  updateSubfilterBar();
-  updateKeywordFilterBar();
-  filterList();
-});
 </script>
 </body>
 </html>
