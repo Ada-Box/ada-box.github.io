@@ -831,15 +831,6 @@ function updateSubfilterBar() {
   }
 }
 
-function getPinyinInitial(text) {
-  const code = text.charCodeAt(0);
-  if (/[a-zA-Z]/.test(text[0])) return text[0].toUpperCase();
-  if (code >= 19968 && code <= 40869) {
-    return pinyinFirstLetter(text[0])?.toUpperCase() || '#';
-  }
-  return '#';
-}
-
 function updateKeywordFilterBar() {
   const keywordBar = document.querySelector(".tagfilter-bar") || document.createElement("div");
   keywordBar.className = "tagfilter-bar";
@@ -857,35 +848,46 @@ function updateKeywordFilterBar() {
     keywords.forEach(k => keywordSet.add(k));
   });
 
-  if (keywordSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "tagfilter-btn active";
-    allBtn.textContent = "全部关键词";
-    allBtn.onclick = () => filterKeyword("all", allBtn);
-    keywordBar.appendChild(allBtn);
-
-    const grouped = {};
-    [...keywordSet].forEach(kw => {
-      const initial = getPinyinInitial(kw);
-      if (!grouped[initial]) grouped[initial] = [];
-      grouped[initial].push(kw);
-    });
-
-    Object.keys(grouped).sort().forEach(initial => {
-      const divider = document.createElement("div");
-      divider.textContent = initial;
-      divider.className = "pinyin-divider";
-      keywordBar.appendChild(divider);
-
-      grouped[initial].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
-        const btn = document.createElement("button");
-        btn.className = "tagfilter-btn";
-        btn.textContent = kw;
-        btn.onclick = () => filterKeyword(kw, btn);
-        keywordBar.appendChild(btn);
-      });
-    });
+  const grouped = {};
+  for (const k of keywordSet) {
+    const initial = k[0].toUpperCase();
+    const groupKey = /^[A-Z]$/.test(initial) ? initial : '#';
+    if (!grouped[groupKey]) grouped[groupKey] = [];
+    grouped[groupKey].push(k);
   }
+
+  const allBtn = document.createElement("button");
+  allBtn.className = "tagfilter-btn active";
+  allBtn.textContent = "全部关键词";
+  allBtn.onclick = () => filterKeyword("all", allBtn);
+  keywordBar.appendChild(allBtn);
+
+  Object.keys(grouped).sort().forEach(letter => {
+    const divider = document.createElement("div");
+    divider.textContent = letter;
+    divider.style.borderTop = "1px dashed #ccc";
+    divider.style.margin = "10px 0 4px";
+    divider.style.paddingTop = "4px";
+    divider.style.color = "#555";
+    divider.style.fontWeight = "bold";
+    keywordBar.appendChild(divider);
+
+    grouped[letter].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
+      const btn = document.createElement("button");
+      btn.className = "tagfilter-btn";
+      btn.textContent = kw;
+      btn.onclick = () => filterKeyword(kw, btn);
+      keywordBar.appendChild(btn);
+    });
+  });
+}
+
+function extractKeywordsFromLi(li) {
+  const kwDiv = li.querySelector('.keywords');
+  if (!kwDiv) return '';
+  let raw = kwDiv.textContent.trim();
+  raw = raw.replace(/^关键词[:：]?\s*/, '');
+  return raw;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -899,8 +901,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (sibling.tagName === "UL") {
         sibling.querySelectorAll("li").forEach(li => {
           li.dataset.tag = tag;
-          const keywordText = li.querySelector('.keywords')?.textContent.replace(/关键词[:：]/, '').trim() || '';
-          li.dataset.keywords = keywordText;
+          li.dataset.keywords = extractKeywordsFromLi(li);
         });
       } else if (sibling.tagName === "H3") {
         const subtag = sibling.textContent.trim();
@@ -910,8 +911,7 @@ document.addEventListener("DOMContentLoaded", () => {
           items.forEach(li => {
             li.dataset.tag = tag;
             li.dataset.subtag = subtag;
-            const keywordText = li.querySelector('.keywords')?.textContent.replace(/关键词[:：]/, '').trim() || '';
-            li.dataset.keywords = keywordText;
+            li.dataset.keywords = extractKeywordsFromLi(li);
           });
           items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
           ul.innerHTML = '';
