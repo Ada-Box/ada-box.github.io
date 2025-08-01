@@ -703,17 +703,6 @@ function highlightText(text, keywords) {
   return result;
 }
 
-function getInitialLetter(str) {
-  const ch = str.charAt(0);
-  const code = ch.charCodeAt(0);
-  if (/^[A-Za-z]$/.test(ch)) return ch.toUpperCase();
-  if (code >= 0x4e00 && code <= 0x9fff) {
-    const py = window.pinyin?.getFullChars?.(str)?.charAt(0) || '';
-    return py.toUpperCase();
-  }
-  return '#';
-}
-
 function filterList() {
   const input = document.getElementById("searchInput").value.toLowerCase().trim();
   const inputKeywords = input.split(/\s+/).filter(Boolean);
@@ -860,11 +849,12 @@ function updateKeywordFilterBar() {
   });
 
   const grouped = {};
-  [...keywordSet].forEach(kw => {
-    const letter = getInitialLetter(kw);
-    if (!grouped[letter]) grouped[letter] = [];
-    grouped[letter].push(kw);
-  });
+  for (const kw of keywordSet) {
+    const first = kw[0].toUpperCase();
+    const group = /[A-Z]/.test(first) ? first : '#';
+    grouped[group] = grouped[group] || [];
+    grouped[group].push(kw);
+  }
 
   const allBtn = document.createElement("button");
   allBtn.className = "tagfilter-btn active";
@@ -873,22 +863,18 @@ function updateKeywordFilterBar() {
   keywordBar.appendChild(allBtn);
 
   Object.keys(grouped).sort().forEach(letter => {
-    const title = document.createElement("div");
-    title.className = "tagfilter-title";
-    title.textContent = letter;
-
-    const groupDiv = document.createElement("div");
-    groupDiv.className = "tagfilter-group";
-    groupDiv.appendChild(title);
-
+    const line = document.createElement("div");
+    line.style.borderTop = "1px dashed #ccc";
+    line.style.marginTop = "8px";
+    line.style.paddingTop = "4px";
     grouped[letter].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
       const btn = document.createElement("button");
       btn.className = "tagfilter-btn";
       btn.textContent = kw;
       btn.onclick = () => filterKeyword(kw, btn);
-      groupDiv.appendChild(btn);
+      line.appendChild(btn);
     });
-    keywordBar.appendChild(groupDiv);
+    keywordBar.appendChild(line);
   });
 }
 
