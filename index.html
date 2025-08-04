@@ -83,9 +83,10 @@ input[type="text"] {
   margin: 4px 6px 4px 0;
   cursor: pointer;
   font-size: 13px;
+  transition: background-color 0.2s, color 0.2s;
 }
 .tagfilter-btn.active {
-  background-color: #28a745; /* ✅绿色背景高亮 */
+  background-color: #28a745; /* ✅绿色高亮背景 */
   color: white;
   border-color: #28a745;
 }
@@ -719,7 +720,7 @@ function filterList() {
           const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
           li.style.display = visible ? '' : 'none';
           if (visible && inputKeywords.length > 0) {
-            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), inputKeywords);
+            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?.*?mark>/g, ''), inputKeywords);
           }
         });
         const anyVisible = [...lis].some(li => li.style.display !== 'none');
@@ -736,7 +737,7 @@ function filterList() {
           const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
           li.style.display = visible ? '' : 'none';
           if (visible && inputKeywords.length > 0) {
-            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?mark>/g, ''), inputKeywords);
+            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?.*?mark>/g, ''), inputKeywords);
           }
         });
         const anyVisible = [...lis].some(li => li.style.display !== 'none');
@@ -779,19 +780,14 @@ function filterKeyword(kw, btn) {
     document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   } else {
-    const isActive = currentKeywords.includes(kw);
-    if (isActive) {
+    if (currentKeywords.includes(kw)) {
       currentKeywords = currentKeywords.filter(k => k !== kw);
       btn.classList.remove('active');
     } else {
       currentKeywords.push(kw);
       btn.classList.add('active');
     }
-    document.querySelectorAll('.tagfilter-btn').forEach(b => {
-      if (b.textContent === '全部关键词') {
-        b.classList.remove('active');
-      }
-    });
+    document.querySelector('.tagfilter-btn[textContent="全部关键词"]')?.classList.remove('active');
   }
   filterList();
 }
@@ -853,6 +849,9 @@ function updateKeywordFilterBar() {
       const btn = document.createElement("button");
       btn.className = "tagfilter-btn";
       btn.textContent = kw;
+      if (currentKeywords.includes(kw)) {
+        btn.classList.add("active");
+      }
       btn.onclick = () => filterKeyword(kw, btn);
       keywordBar.appendChild(btn);
     });
