@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ada 的法律资料主页</title>
 <style>
 body {
   font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
-  background-color: #f7f7f7;
+  background-color: #f2f4f7;
   margin: 0;
   padding: 40px;
   color: #333;
+  line-height: 1.6;
 }
+
 h1 {
-  color: #0055aa;
-  font-size: 32px;
+  color: #003366;
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+p {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+
+#searchInput {
+  display: block;
+  margin: 20px auto 40px;
+  padding: 12px 20px;
+  width: 80%;
+  max-width: 600px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+ul.pdf-section {
+  list-style: none;
+  padding: 0;
+}
+
+ul.pdf-section li {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px auto;
+  max-width: 900px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+ul.pdf-section li:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+ul.pdf-section li a {
+  font-size: 18px;
+  font-weight: 600;
+  color: #007acc;
+  text-decoration: none;
+}
+
+ul.pdf-section li a:hover {
+  text-decoration: underline;
+}
+
+.keywords {
+  margin-top: 8px;
+  color: #4CAF50;
+  font-size: 14px;
 }
 </style>
 </head>
