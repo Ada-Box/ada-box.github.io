@@ -16,133 +16,6 @@ h1 {
   color: #0055aa;
   font-size: 32px;
 }
-h2 {
-  margin-top: 40px;
-  font-size: 24px;
-  color: #222;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 6px;
-}
-h3 {
-  margin-top: 30px;
-  font-size: 20px;
-  color: #cc6600;
-  border-left: 4px solid #ffa500;
-  padding-left: 10px;
-  background-color: #fff6e5;
-}
-input[type="text"] {
-  width: 100%;
-  max-width: 500px;
-  padding: 10px;
-  font-size: 16px;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-.filter-bar {
-  margin-bottom: 20px;
-}
-.filter-btn {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px 12px;
-  margin-right: 8px;
-  cursor: pointer;
-}
-.filter-btn.active {
-  background-color: #007acc;
-  color: white;
-}
-.subfilter-bar {
-  margin-bottom: 12px;
-}
-.subfilter-btn {
-  background: #f9f9f9;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  padding: 4px 10px;
-  margin: 4px 6px 4px 0;
-  cursor: pointer;
-  font-size: 13px;
-}
-.subfilter-btn.active {
-  background-color: #ffa500;
-  color: white;
-  border-color: #ffa500;
-}
-.tagfilter-bar {
-  margin-bottom: 30px;
-}
-.tagfilter-btn {
-  background: #f0f0f0;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  padding: 4px 10px;
-  margin: 4px 6px 4px 0;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.2s, color 0.2s;
-}
-.tagfilter-btn.active {
-  background-color: #28a745; /* ✅绿色高亮背景 */
-  color: white;
-  border-color: #28a745;
-}
-.pdf-section {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 0;
-  list-style: none;
-}
-.pdf-section li {
-  flex: 1 1 30%;
-  max-width: 30%;
-  box-sizing: border-box;
-  margin: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 10px;
-  background-color: #fff;
-}
-a {
-  color: #007acc;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-.keywords {
-  font-size: 12px;
-  color: #666;
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px dashed #aaa;
-}
-mark {
-  background-color: yellow;
-  font-weight: bold;
-}
-#noResults {
-  display: none;
-  color: #888;
-  margin-top: 20px;
-  font-size: 14px;
-}
-@media (max-width: 992px) {
-  .pdf-section li {
-    flex: 1 1 45%;
-    max-width: 45%;
-  }
-}
-@media (max-width: 768px) {
-  .pdf-section li {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-}
 </style>
 </head>
 <body>
@@ -151,17 +24,6 @@ mark {
 
   <input type="text" id="searchInput" placeholder="🔍 搜索标题或关键词..." onkeyup="filterList()" />
 
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterTag('all')">全部</button>
-    <button class="filter-btn" onclick="filterTag('实操指引')">实操指引</button>
-    <button class="filter-btn" onclick="filterTag('案例精选')">案例精选</button>
-    <button class="filter-btn" onclick="filterTag('法律研究')">法律研究</button>
-  </div>
-  <div class="subfilter-bar" id="subfilterBar"></div>
-  
-  <div id="listPlaceholder">
-    <!-- 📥 实操指引 / 指南 -->
-  <h2>📥 实操指引 / 指南</h2>
   <ul class="pdf-section">
     <li>
       🔖 <a href="Guide/index000.html" target="_blank">微信、支付宝交易流水调取操作指引（律师版）</a>
@@ -172,47 +34,38 @@ mark {
       <div class="keywords">关键词：调查令 交易流水 实操指引 微信</div>
     </li>
   </ul>
-
-    <h3>劳动人事</h3>
-      <ul class="pdf-section">
-        <li>
-          🔖 <a href="Guide/index002.html" target="_blank">公司没缴社保，社保局与仲裁委互相踢皮球怎么办？其实是你搞错了申诉顺序，3步操作让他们无法甩锅！</a>
-          <div class="keywords">关键词：劳动争议纠纷 未办理社保手续</div>
+    <li>
+      🔖 <a href="Guide/index002.html" target="_blank">公司没缴社保，社保局与仲裁委互相踢皮球怎么办？其实是你搞错了申诉顺序，3步操作让他们无法甩锅！</a>
+      <div class="keywords">关键词：劳动争议纠纷 未办理社保手续</div>
         </li>    
-        <li>
-          🔖 <a href="Guide/index003.html" target="_blank">【国发〔2018〕28号】国务院关于取消一批行政许可等事项的决定丨关于取消台港澳人员在内地就业许可的规定</a>
-          <div class="keywords">关键词：涉外 港澳台 就业许可</div>
-        </li>
-        <li>
-          🔖 <a href="Guide/index004.html" target="_blank">【人社建字〔2018〕85号】人力资源社会保障部对十三届全国人大一次会议第6083号建议的答复丨关于外国籍人才养老保险制度相关内容</a>
-          <div class="keywords">关键词：涉外 社会保险 外国人</div>
-        </li>
-        <li>
-          🔖 <a href="Guide/index005.html" target="_blank">外国人来华工作许可办理流程图</a>
-          <div class="keywords">关键词：涉外 外国人 工作许可</div>
-        </li>
-        <li>
-          🔖 <a href="Guide/index006.html" target="_blank">外国人来华工作许可事项说明</a>
-          <div class="keywords">关键词：涉外 外国人 工作许可</div>
-        </li>
-        <li>
-          🔖 <a href="Guide/index007.html" target="_blank">【人社部发〔2018〕53号】人力资源社会保障部关于香港澳门台湾居民在内地（大陆）就业有关事项的通知</a>
-          <div class="keywords">关键词：涉外 港澳台 工作许可</div>
-        </li>
-        <li>
-          🔖 <a href="Guide/index008.pdf" target="_blank">外国人来华工作分类标准(试行)</a>
-          <div class="keywords">关键词：涉外 外国人</div>
-        </li>
-        <li>
-          🔖 <a href="Guide/index009.pdf" target="_blank">外国人来华工作许可服务指南（暂行）</a>
-          <div class="keywords">关键词：涉外 外国人 工作许可 办理流程</div>
-        </li>
-      </ul>        
-  <!-- 一级分类 H2 -->
-  <h2>📥 案例精选/官方问答</h2>
-
-  <!-- 没有子类的条目放在独立 ul 里 -->
-  <ul class="pdf-section">
+    <li>
+      🔖 <a href="Guide/index003.html" target="_blank">【国发〔2018〕28号】国务院关于取消一批行政许可等事项的决定丨关于取消台港澳人员在内地就业许可的规定</a>
+      <div class="keywords">关键词：涉外 港澳台 就业许可</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index004.html" target="_blank">【人社建字〔2018〕85号】人力资源社会保障部对十三届全国人大一次会议第6083号建议的答复丨关于外国籍人才养老保险制度相关内容</a>
+      <div class="keywords">关键词：涉外 社会保险 外国人</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index005.html" target="_blank">外国人来华工作许可办理流程图</a>
+      <div class="keywords">关键词：涉外 外国人 工作许可</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index006.html" target="_blank">外国人来华工作许可事项说明</a>
+      <div class="keywords">关键词：涉外 外国人 工作许可</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index007.html" target="_blank">【人社部发〔2018〕53号】人力资源社会保障部关于香港澳门台湾居民在内地（大陆）就业有关事项的通知</a>
+      <div class="keywords">关键词：涉外 港澳台 工作许可</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index008.pdf" target="_blank">外国人来华工作分类标准(试行)</a>
+      <div class="keywords">关键词：涉外 外国人</div>
+    </li>
+    <li>
+      🔖 <a href="Guide/index009.pdf" target="_blank">外国人来华工作许可服务指南（暂行）</a>
+      <div class="keywords">关键词：涉外 外国人 工作许可 办理流程</div>
+    </li>        
     <li>
       🔖 <a href="Cases/index000.html" target="_blank">【（2021）最高法知民终2112号】雄狮公司与新网公司计算机软件开发合同纠纷案</a>
       <div class="keywords">关键词：聊天记录 原始载体</div>
@@ -221,108 +74,86 @@ mark {
       🔖 <a href="Cases/index010.html" target="_blank">全国法院：关于格式条款纠纷的指导意见+裁判规则(2025.2修订)</a>
       <div class="keywords">关键词：格式条款</div>
     </li>  
-  </ul>
-
-<!-- 二级子类 h3 + 子类 ul -->
-    <h3>劳动人事</h3>
-      <ul class="pdf-section">
-        <li>
-          🔖 <a href="Cases/index001.html" target="_blank">问题2：用人单位与劳动者连续两次订立固定期限劳动合同，期满后用人单位对续订无固定期限劳动合同是否享有选择权？</a>
-          <div class="keywords">关键词：无固定期限劳动合同 劳动合同 经济补偿金 违法解除</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index008.html" target="_blank">【法研〔2011〕31号】最高人民法院研究室关于王某与某公司劳动争议纠纷申请再审一案适用法律问题的答复</a>
-          <div class="keywords">关键词：劳动争议纠纷 补缴社保</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index009.html" target="_blank">最高人民法院关于用人单位不缴或少缴社会保险费问题的答复</a>
-          <div class="keywords">关键词：劳动争议纠纷 补缴社保</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index010.html" target="_blank">成都社保缴费基数如何确定？你的社保足额缴纳了吗？</a>
-          <div class="keywords">关键词：劳动争议纠纷 社保基数 四川 成都</div>
-        </li>  
-        <li>
-          🔖 <a href="Cases/index011.html" target="_blank">社保缴费基数这样确定，别再被蒙在鼓里了！</a>
-          <div class="keywords">关键词：劳动争议纠纷 社保基数 四川 成都</div>
-        </li>  
-        <li>
-          🔖 <a href="Cases/index012.pdf" target="_blank">【劳社险中心函〔2006〕60 号】中华人民共和国劳动和社会保障部社会保险事业管理中心关于规范社会保险缴费基数有关问题的通知</a>
-          <div class="keywords">关键词：社保基数 工资总额</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index013.html" target="_blank">【（2024）粤01民终13367号】案例精选｜外籍员工与关联公司双重合同下的劳动关系认定</a>
-          <div class="keywords">关键词：涉外 外国人 劳动关系认定 劳动争议纠纷</div>
-        </li>  
-        <li>
-          🔖 <a href="Cases/index014.html" target="_blank">【(2024)渝01民终4914号】外国人在华劳动纠纷处置，劳动关系、法律适用、经济补偿等问题如何认定 ，法院说理巨详细！</a>
-          <div class="keywords">关键词：涉外 外国人 劳动关系认定 劳动争议纠纷 法律适用 经济补偿</div>
-        </li>  
-        <li>
-          🔖 <a href="Cases/index015.html" target="_blank">外国人未办理就业许可证就签订劳动合同，影响合同效力吗？</a>
-          <div class="keywords">关键词：涉外 外国人 劳动关系认定 劳动争议纠纷 就业许可</div>
-        </li> 
-  <!-- 其他“劳动人事”子类内容继续放在这个 ul 里 -->
-      </ul>
-
-    <h3>公司治理</h3>
-      <ul class="pdf-section">
-        <li>
-          🔖 <a href="Cases/index002.html" target="_blank">【（2016）川01民终4662号】李辉与成都航天橡塑件制造有限公司股东知情权纠纷案</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index003.html" target="_blank">【（2009）浙甬商终字第1254号】张章生诉宁波中缝公司股东知情权纠纷案</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index004.html" target="_blank">【（2021）粤执监104号】广州中资国华投资有限公司与广州杰瑞置业有限公司股东知情权执行异议纠纷案</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index005.html" target="_blank">【（2019）浙11民终242号】苏晓明诉青田申江服装设备制造有限公司股东知情权纠纷案</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index006.html" target="_blank">【（2019）苏0102民初13094号】方达公司科宁达公司股东知情权纠纷案</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例</div>
-        </li>
-        <li>
-          🔖 <a href="Cases/index007.html" target="_blank">【（2008）一中民终字第5114号】北京熊猫恒盛机械设备有限公司与上海熊猫机械(集团)有限公司股东知情权纠纷案</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例</div>
-        </li> 
-  <!-- 其他“公司治理”子类内容继续放在这个 ul 里 -->
-      </ul>
-    <h3>娱乐法</h3>
-      <ul class="pdf-section">     
-        <li>
-          🔖 <a href="Cases/index008.html" target="_blank">最高院指导案例：网络主播未经直播平台同意，在其他平台从事类似业务的，应当依法承担违约责任</a>
-          <div class="keywords">关键词：合同纠纷 主播 MCN机构 案例 违反独家义务</div>
-        </li>  
-        <li>
-          🔖 <a href="Cases/index009.html" target="_blank">原创 | 郑吉喆：新就业形态中网络主播与MCN机构劳动关系的认定——以指导性案例239号为例</a>
-          <div class="keywords">关键词：合同纠纷 主播 MCN机构 案例 劳动关系认定</div>
-        </li>  
-      </ul>
-    
-  <!-- 📥 法律研究 -->
-  <h2>📥 法律研究</h2>
-    
-<!-- 二级子类 h3 + 子类 ul -->
-    <h3>公司治理</h3>
-      <ul class="pdf-section">
-        <li>
-          🔖 <a href="Legal Research/index000.html" target="_blank">关于股东知情权的实务分析</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例 前置程序</div>
-        </li>
-        <li>
-          🔖 <a href="Legal Research/index001.html" target="_blank">专业文章：有限公司股东知情权的行使与救济</a>
-          <div class="keywords">关键词：股东知情权纠纷 案例 前置程序 知情权行使范围 申请执行</div>
-        </li>
-         <li>
-          🔖 <a href="Legal Research/index002.html" target="_blank">研究 ｜ 有限责任公司股东知情权实现的关键问题及应对</a>
-          <div class="keywords">关键词：股东知情权纠纷 前置程序 申请执行 申请保全</div>
-        </li>   
+    <li>
+      🔖 <a href="Cases/index001.html" target="_blank">问题2：用人单位与劳动者连续两次订立固定期限劳动合同，期满后用人单位对续订无固定期限劳动合同是否享有选择权？</a>
+      <div class="keywords">关键词：无固定期限劳动合同 劳动合同 经济补偿金 违法解除</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index008.html" target="_blank">【法研〔2011〕31号】最高人民法院研究室关于王某与某公司劳动争议纠纷申请再审一案适用法律问题的答复</a>
+      <div class="keywords">关键词：劳动争议纠纷 补缴社保</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index009.html" target="_blank">最高人民法院关于用人单位不缴或少缴社会保险费问题的答复</a>
+      <div class="keywords">关键词：劳动争议纠纷 补缴社保</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index010.html" target="_blank">成都社保缴费基数如何确定？你的社保足额缴纳了吗？</a>
+      <div class="keywords">关键词：劳动争议纠纷 社保基数 四川 成都</div>
+    </li>  
+    <li>
+      🔖 <a href="Cases/index011.html" target="_blank">社保缴费基数这样确定，别再被蒙在鼓里了！</a>
+      <div class="keywords">关键词：劳动争议纠纷 社保基数 四川 成都</div>
+    </li>  
+    <li>
+      🔖 <a href="Cases/index012.pdf" target="_blank">【劳社险中心函〔2006〕60 号】中华人民共和国劳动和社会保障部社会保险事业管理中心关于规范社会保险缴费基数有关问题的通知</a>
+      <div class="keywords">关键词：社保基数 工资总额</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index013.html" target="_blank">【（2024）粤01民终13367号】案例精选｜外籍员工与关联公司双重合同下的劳动关系认定</a>
+      <div class="keywords">关键词：涉外 外国人 劳动关系认定 劳动争议纠纷</div>
+    </li>  
+    <li>
+      🔖 <a href="Cases/index014.html" target="_blank">【(2024)渝01民终4914号】外国人在华劳动纠纷处置，劳动关系、法律适用、经济补偿等问题如何认定 ，法院说理巨详细！</a>
+      <div class="keywords">关键词：涉外 外国人 劳动关系认定 劳动争议纠纷 法律适用 经济补偿</div>
+    </li>  
+    <li>
+      🔖 <a href="Cases/index015.html" target="_blank">外国人未办理就业许可证就签订劳动合同，影响合同效力吗？</a>
+      <div class="keywords">关键词：涉外 外国人 劳动关系认定 劳动争议纠纷 就业许可</div>
+    </li> 
+    <li>
+      🔖 <a href="Cases/index002.html" target="_blank">【（2016）川01民终4662号】李辉与成都航天橡塑件制造有限公司股东知情权纠纷案</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index003.html" target="_blank">【（2009）浙甬商终字第1254号】张章生诉宁波中缝公司股东知情权纠纷案</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index004.html" target="_blank">【（2021）粤执监104号】广州中资国华投资有限公司与广州杰瑞置业有限公司股东知情权执行异议纠纷案</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index005.html" target="_blank">【（2019）浙11民终242号】苏晓明诉青田申江服装设备制造有限公司股东知情权纠纷案</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index006.html" target="_blank">【（2019）苏0102民初13094号】方达公司科宁达公司股东知情权纠纷案</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例</div>
+    </li>
+    <li>
+      🔖 <a href="Cases/index007.html" target="_blank">【（2008）一中民终字第5114号】北京熊猫恒盛机械设备有限公司与上海熊猫机械(集团)有限公司股东知情权纠纷案</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例</div>
+    </li>   
+    <li>
+      🔖 <a href="Cases/index008.html" target="_blank">最高院指导案例：网络主播未经直播平台同意，在其他平台从事类似业务的，应当依法承担违约责任</a>
+      <div class="keywords">关键词：合同纠纷 主播 MCN机构 案例 违反独家义务</div>
+    </li>  
+    <li>
+      🔖 <a href="Cases/index009.html" target="_blank">原创 | 郑吉喆：新就业形态中网络主播与MCN机构劳动关系的认定——以指导性案例239号为例</a>
+      <div class="keywords">关键词：合同纠纷 主播 MCN机构 案例 劳动关系认定</div>
+    </li>  
+    <li>
+      🔖 <a href="Legal Research/index000.html" target="_blank">关于股东知情权的实务分析</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例 前置程序</div>
+    </li>
+    <li>
+      🔖 <a href="Legal Research/index001.html" target="_blank">专业文章：有限公司股东知情权的行使与救济</a>
+      <div class="keywords">关键词：股东知情权纠纷 案例 前置程序 知情权行使范围 申请执行</div>
+    </li>
+    <li>
+      🔖 <a href="Legal Research/index002.html" target="_blank">研究 ｜ 有限责任公司股东知情权实现的关键问题及应对</a>
+      <div class="keywords">关键词：股东知情权纠纷 前置程序 申请执行 申请保全</div>
+    </li>   
          <li>
           🔖 <a href="Legal Research/index003.html" target="_blank">研究 | 股东知情权诉讼拦路虎之（二）——前置程序</a>
           <div class="keywords">关键词：股东知情权纠纷 案例 前置程序</div>
@@ -406,7 +237,6 @@ mark {
   <!-- 其他“公司治理”子类内容继续放在这个 ul 里 -->
       </ul>
 
-    <h3>企业出海</h3>
       <ul class="pdf-section">
         <li>    
           🔖 <a href="Legal Research/index023.html" target="_blank">君合法评丨澳大利亚法律系列介绍（一）：澳大利亚外商投资委员会审批</a>
@@ -478,7 +308,6 @@ mark {
         </li> 
       </ul>
 
-    <h3>劳动人事</h3>
       <ul class="pdf-section">        
         <li>
           🔖 <a href="Legal Research/index040.html" target="_blank">从IPO案例看高校人员在外兼职的审核关注要点</a>
@@ -598,7 +427,6 @@ mark {
         </li>
       </ul>
 
-    <h3>投资并购</h3>
       <ul class="pdf-section">     
         <li>
           🔖 <a href="Legal Research/index048.html" target="_blank">增资协议解除后要求公司返还增资款构成抽逃出资?|公司法权威解读</a>
@@ -606,7 +434,6 @@ mark {
         </li>  
       </ul>
 
-    <h3>娱乐法</h3>
       <ul class="pdf-section">
         <li>
           🔖 <a href="Legal Research/index051.html" target="_blank">主播与MCN合同纠纷中违约金调整规则的适用及应对——以主播为视角</a>
@@ -678,224 +505,28 @@ mark {
   <div id="noResults">❗ 未找到匹配的文件，请尝试其他关键词。</div>
 
 <script>
-let currentTag = 'all';
-let currentSubtag = 'all';
-let currentKeywords = [];
-
-function highlightText(text, keywords) {
-  let result = text;
-  keywords.forEach(kw => {
-    if (kw) {
-      const regex = new RegExp(`(${kw})`, 'gi');
-      result = result.replace(regex, '<mark>$1</mark>');
-    }
-  });
-  return result;
-}
-
-function filterList() {
-  const input = document.getElementById("searchInput").value.toLowerCase().trim();
-  const inputKeywords = input.split(/\s+/).filter(Boolean);
-  const allLis = document.querySelectorAll("li[data-tag]");
-  const h2Blocks = document.querySelectorAll("#listPlaceholder > h2");
-
-  h2Blocks.forEach(h2 => {
-    let showH2 = false;
-    let sibling = h2.nextElementSibling;
-    const groupElements = [];
-
-    while (sibling && sibling.tagName !== "H2") {
-      groupElements.push(sibling);
-      sibling = sibling.nextElementSibling;
-    }
-
-    groupElements.forEach(el => {
-      if (el.tagName === "UL") {
-        const lis = el.querySelectorAll("li");
-        lis.forEach(li => {
-          const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
-          const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-          const keywordMatch = (currentKeywords.length === 0 || currentKeywords.every(kw => li.dataset.keywords && li.dataset.keywords.includes(kw)));
-          const inputMatch = (inputKeywords.length === 0 || inputKeywords.every(k => li.textContent.toLowerCase().includes(k)));
-          const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
-          li.style.display = visible ? '' : 'none';
-          if (visible && inputKeywords.length > 0) {
-            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?.*?mark>/g, ''), inputKeywords);
-          }
-        });
-        const anyVisible = [...lis].some(li => li.style.display !== 'none');
-        el.style.display = anyVisible ? '' : 'none';
-        if (anyVisible) showH2 = true;
-      } else if (el.tagName === "H3") {
-        const nextUl = el.nextElementSibling;
-        const lis = nextUl ? nextUl.querySelectorAll("li") : [];
-        lis.forEach(li => {
-          const tagMatch = (currentTag === 'all' || li.dataset.tag === currentTag);
-          const subtagMatch = (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-          const keywordMatch = (currentKeywords.length === 0 || currentKeywords.every(kw => li.dataset.keywords && li.dataset.keywords.includes(kw)));
-          const inputMatch = (inputKeywords.length === 0 || inputKeywords.every(k => li.textContent.toLowerCase().includes(k)));
-          const visible = tagMatch && subtagMatch && keywordMatch && inputMatch;
-          li.style.display = visible ? '' : 'none';
-          if (visible && inputKeywords.length > 0) {
-            li.innerHTML = highlightText(li.innerHTML.replace(/<\/?.*?mark>/g, ''), inputKeywords);
-          }
-        });
-        const anyVisible = [...lis].some(li => li.style.display !== 'none');
-        el.style.display = anyVisible ? '' : 'none';
-        if (nextUl) nextUl.style.display = anyVisible ? '' : 'none';
-        if (anyVisible) showH2 = true;
-      }
-    });
-
-    h2.style.display = showH2 ? '' : 'none';
-  });
-
-  document.getElementById("noResults").style.display =
-    [...document.querySelectorAll("li[data-tag]")].every(li => li.style.display === "none") ? "block" : "none";
-
-  updateKeywordFilterBar();
-}
-
-function filterTag(tag) {
-  currentTag = tag;
-  currentSubtag = 'all';
-  currentKeywords = [];
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  updateSubfilterBar();
-  filterList();
-}
-
-function filterSubtag(subtag, btn) {
-  currentSubtag = subtag;
-  currentKeywords = [];
-  document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filterList();
-}
-
-function filterKeyword(kw, btn) {
-  if (kw === 'all') {
-    currentKeywords = [];
-    document.querySelectorAll('.tagfilter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  } else {
-    if (currentKeywords.includes(kw)) {
-      currentKeywords = currentKeywords.filter(k => k !== kw);
-      btn.classList.remove('active');
-    } else {
-      currentKeywords.push(kw);
-      btn.classList.add('active');
-    }
-    document.querySelector('.tagfilter-btn[textContent="全部关键词"]')?.classList.remove('active');
-  }
-  filterList();
-}
-
-function updateSubfilterBar() {
-  const subfilterBar = document.getElementById("subfilterBar");
-  subfilterBar.innerHTML = '';
-
-  const subtagSet = new Set();
-  const visibleLis = document.querySelectorAll("li[data-subtag]");
-  visibleLis.forEach(li => {
-    if (currentTag === 'all' || li.dataset.tag === currentTag) {
-      subtagSet.add(li.dataset.subtag);
-    }
-  });
-
-  if (subtagSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "subfilter-btn active";
-    allBtn.textContent = "全部子类";
-    allBtn.onclick = () => filterSubtag("all", allBtn);
-    subfilterBar.appendChild(allBtn);
-
-    [...subtagSet].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(subtag => {
-      const btn = document.createElement("button");
-      btn.className = "subfilter-btn";
-      btn.textContent = subtag;
-      btn.onclick = () => filterSubtag(subtag, btn);
-      subfilterBar.appendChild(btn);
-    });
-  }
-}
-
-function updateKeywordFilterBar() {
-  const keywordBar = document.querySelector(".tagfilter-bar") || document.createElement("div");
-  keywordBar.className = "tagfilter-bar";
-  keywordBar.innerHTML = '';
-  document.querySelector(".subfilter-bar").after(keywordBar);
-
-  const keywordSet = new Set();
-  const lis = [...document.querySelectorAll("li[data-tag]")].filter(li => {
-    return (currentTag === 'all' || li.dataset.tag === currentTag) &&
-           (currentSubtag === 'all' || li.dataset.subtag === currentSubtag);
-  });
-
-  lis.forEach(li => {
-    const keywords = li.dataset.keywords?.split(/\s+/) || [];
-    keywords.forEach(k => keywordSet.add(k));
-  });
-
-  if (keywordSet.size > 0) {
-    const allBtn = document.createElement("button");
-    allBtn.className = "tagfilter-btn active";
-    allBtn.textContent = "全部关键词";
-    allBtn.onclick = () => filterKeyword("all", allBtn);
-    keywordBar.appendChild(allBtn);
-
-    [...keywordSet].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach(kw => {
-      const btn = document.createElement("button");
-      btn.className = "tagfilter-btn";
-      btn.textContent = kw;
-      if (currentKeywords.includes(kw)) {
-        btn.classList.add("active");
-      }
-      btn.onclick = () => filterKeyword(kw, btn);
-      keywordBar.appendChild(btn);
-    });
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  const allH2s = document.querySelectorAll("#listPlaceholder > h2");
+  const searchInput = document.getElementById("searchInput");
+  const allLis = document.querySelectorAll("li");
 
-  allH2s.forEach(h2 => {
-    const tag = h2.textContent.trim().replace(/^[📥\s]*/, '').split('/')[0].trim();
-    let sibling = h2.nextElementSibling;
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let anyVisible = false;
 
-    while (sibling && sibling.tagName !== "H2") {
-      if (sibling.tagName === "UL") {
-        sibling.querySelectorAll("li").forEach(li => {
-          li.dataset.tag = tag;
-          const keywordText = li.querySelector('.keywords')?.textContent.replace(/关键词[:：]/, '').trim() || '';
-          li.dataset.keywords = keywordText;
-        });
-      } else if (sibling.tagName === "H3") {
-        const subtag = sibling.textContent.trim();
-        let ul = sibling.nextElementSibling;
-        if (ul && ul.tagName === "UL") {
-          const items = Array.from(ul.querySelectorAll("li"));
-          items.forEach(li => {
-            li.dataset.tag = tag;
-            li.dataset.subtag = subtag;
-            const keywordText = li.querySelector('.keywords')?.textContent.replace(/关键词[:：]/, '').trim() || '';
-            li.dataset.keywords = keywordText;
-          });
-          items.sort((a, b) => a.textContent.localeCompare(b.textContent, 'zh-CN'));
-          ul.innerHTML = '';
-          items.forEach(li => ul.appendChild(li));
-        }
-      }
-      sibling = sibling.nextElementSibling;
+    allLis.forEach(li => {
+      const text = li.textContent.toLowerCase();
+      const matched = text.includes(query);
+      li.style.display = matched ? "" : "none";
+      if (matched) anyVisible = true;
+    });
+
+    const noResult = document.getElementById("noResults");
+    if (noResult) {
+      noResult.style.display = anyVisible ? "none" : "block";
     }
   });
-
-  updateSubfilterBar();
-  updateKeywordFilterBar();
-  filterList();
 });
 </script>
 </body>
 </html>
+这样的代码可以实现我的需求吗
