@@ -70,8 +70,48 @@ ul.pdf-section li a:hover {
   color: #4CAF50;
   font-size: 14px;
 }
+.scroll-buttons {
+  position: fixed;
+  right: 20px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.scroll-buttons button {
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.scroll-buttons button:hover {
+  background-color: #005fa3;
+}
 </style>
 </head>
+<!-- 返回顶部 / 底部按钮 -->
+<div class="scroll-buttons">
+  <button onclick="scrollToTop()">↑ 返回顶部</button>
+  <button onclick="scrollToBottom()">↓ 跳转到底部</button>
+</div>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function scrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+</script>
 <body>
   <h1>Ada 的法律资料主页</h1>
   <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
