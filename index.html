@@ -41,10 +41,9 @@ p {
 }
 
 ul.pdf-section {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  justify-content: flex-start; /* ✅从左开始排布 */
   padding: 0;
   margin: 0;
   list-style: none;
@@ -54,12 +53,10 @@ ul.pdf-section li {
   background: #fff;
   border-radius: 10px;
   padding: 16px;
-  flex: 1 1 300px;
-  max-width: 360px;
-  box-sizing: border-box;
   font-size: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 ul.pdf-section li:hover {
@@ -75,7 +72,7 @@ ul.pdf-section li a {
 }
 
 ul.pdf-section li a:visited {
-  color: #007acc; /* ✅点击后仍然是蓝色 */
+  color: #007acc;
 }
 
 ul.pdf-section li a:hover {
@@ -120,18 +117,6 @@ ul.pdf-section li a:hover {
 
 .scroll-buttons button:hover {
   background-color: #005fa3;
-}
-
-@media (max-width: 992px) {
-  ul.pdf-section li {
-    flex: 1 1 calc(50% - 20px);
-  }
-}
-
-@media (max-width: 600px) {
-  ul.pdf-section li {
-    flex: 1 1 100%;
-  }
 }
 
 mark {
