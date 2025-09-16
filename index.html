@@ -16,7 +16,7 @@ body {
 
 h1 {
   color: #003366;
-  font-size: 14px;
+  font-size: 22px;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -44,7 +44,7 @@ ul.pdf-section {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center;
+  justify-content: flex-start; /* ✅从左开始排布 */
   padding: 0;
   margin: 0;
   list-style: none;
@@ -67,16 +67,19 @@ ul.pdf-section li:hover {
   transform: translateY(-1px);
 }
 
-@media (max-width: 992px) {
-  ul.pdf-section li {
-    flex: 1 1 calc(50% - 20px);
-  }
+ul.pdf-section li a {
+  font-weight: 600;
+  color: #007acc;
+  text-decoration: none;
+  font-size: 14px;
 }
 
-@media (max-width: 600px) {
-  ul.pdf-section li {
-    flex: 1 1 100%;
-  }
+ul.pdf-section li a:visited {
+  color: #007acc; /* ✅点击后仍然是蓝色 */
+}
+
+ul.pdf-section li a:hover {
+  text-decoration: underline;
 }
 
 .keywords {
@@ -117,6 +120,18 @@ ul.pdf-section li:hover {
 
 .scroll-buttons button:hover {
   background-color: #005fa3;
+}
+
+@media (max-width: 992px) {
+  ul.pdf-section li {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  ul.pdf-section li {
+    flex: 1 1 100%;
+  }
 }
 
 mark {
