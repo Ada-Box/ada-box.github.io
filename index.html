@@ -1,120 +1,129 @@
 <!DOCTYPE html>
-<style>
-body {
-  font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
-  background-color: #f2f4f7;
-  margin: 0;
-  padding: 20px;
-  color: #333;
-  line-height: 1.5;
-}
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ada 的法律资料主页</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: #f2f4f7;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      line-height: 1.5;
+    }
 
-h1 {
-  color: #003366;
-  font-size: 14px;
-  margin-bottom: 10px;
-  text-align: center;
-}
+    h1 {
+      color: #003366;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-p {
-  text-align: center;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 30px;
-}
+    p {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 30px;
+    }
 
-#searchInput {
-  display: block;
-  margin: 0 auto 30px;
-  padding: 10px 16px;
-  width: 90%;
-  max-width: 500px;
-  border: 1px solid #ccc;
-  border-radius: 24px;
-  font-size: 14px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+    #searchInput {
+      display: block;
+      margin: 0 auto 30px;
+      padding: 10px 16px;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 24px;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
 
-ul.pdf-section {
-  list-style: none;
-  padding: 0;
-}
+    ul.pdf-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
 
-ul.pdf-section li {
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px;
-  margin: 12px auto;
-  max-width: 600px;
-  font-size: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-}
+    ul.pdf-section li {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      flex: 1 1 calc(33.33% - 20px);
+      box-sizing: border-box;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      min-width: 280px;
+      max-width: 360px;
+    }
 
-ul.pdf-section li:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transform: translateY(-1px);
-}
+    ul.pdf-section li:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
 
-ul.pdf-section li a {
-  font-weight: 600;
-  color: #007acc;
-  text-decoration: none;
-  font-size: 14px;
-}
+    ul.pdf-section li a {
+      font-weight: 600;
+      color: #007acc;
+      text-decoration: none;
+      font-size: 14px;
+    }
 
-ul.pdf-section li a:hover {
-  text-decoration: underline;
-}
+    ul.pdf-section li a:hover {
+      text-decoration: underline;
+    }
 
-.keywords {
-  margin-top: 6px;
-  color: #4CAF50;
-  font-size: 14px;
-}
+    .keywords {
+      margin-top: 6px;
+      color: #4CAF50;
+      font-size: 14px;
+    }
 
-.scroll-buttons {
-  position: fixed;
-  right: 20px;
-  bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 999;
-}
+    .scroll-buttons {
+      position: fixed;
+      right: 20px;
+      bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 999;
+    }
 
-.scroll-buttons button {
-  background-color: #007acc;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s ease;
-}
+    .scroll-buttons button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s ease;
+    }
 
-.scroll-buttons button:hover {
-  background-color: #005fa3;
-}
-</style>
+    .scroll-buttons button:hover {
+      background-color: #005fa3;
+    }
+
+    @media (max-width: 992px) {
+      ul.pdf-section li {
+        flex: 1 1 calc(50% - 20px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      ul.pdf-section li {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
 </head>
-<!-- 返回顶部 / 底部按钮 -->
-<div class="scroll-buttons">
-  <button onclick="scrollToTop()">↑ 返回顶部</button>
-  <button onclick="scrollToBottom()">↓ 跳转到底部</button>
-</div>
-
-<script>
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function scrollToBottom() {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }
-</script>
 <body>
   <h1>Ada 的法律资料主页</h1>
   <p>以下资料仅供学习研究使用，点击链接可直接预览：</p>
@@ -630,8 +639,8 @@ ul.pdf-section li a:hover {
         <li>
           🔖 <a href="Legal Research/index101.html" target="_blank">人力资源社会保障部、最高人民法院关于联合发布第一批劳动人事争议典型案例的通知 人社部函〔2020〕62号</a>
         </li>
-  </ul>        
-  </div>
+  </ul>
+  <div id="noResults" style="display:none; text-align:center; color:#999; margin-top:20px;">未找到相关内容</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
